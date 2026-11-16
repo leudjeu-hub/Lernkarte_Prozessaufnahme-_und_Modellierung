@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M02 Lernkarten</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap');
+:root{
+  --bg:#f4f1fb; --bg2:#fdf4ec; --surface:#ffffff; --surface2:#f1eef8; --text:#1f1b2e; --muted:#6a6580; --line:#e2dcef;
+  --accent:#6d28d9; --accent-soft:#efe7ff; --ok:#15803d; --ok-soft:#dcfce7; --warn:#c2410c; --warn-soft:#ffedd5;
+  --kurs:#0f766e; --cs:#1d4ed8; --fall:#7e22ce; --calc:#15803d; --allg:#c2410c;
+  --shadow:0 2px 6px rgba(60,30,120,.08),0 18px 40px rgba(60,30,120,.12);
+  --t-kap1:#6366f1; --t-kap12:#4338ca;
+  --t-kap2:#0ea5e9; --t-kap22:#0369a1;
+  --t-kap3:#a855f7; --t-kap32:#6b21a8;
+  --t-kap4:#10b981; --t-kap42:#047857;
+  --t-quiz:#f59e0b; --t-quiz2:#b45309;
+  --t-erg:#f97316; --t-erg2:#c2410c;
+  --t-kurs:#ec4899; --t-kurs2:#9d174d;
+  --t-all:#8b5cf6; --t-all2:#db2777;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15121f; --bg2:#1d1426; --surface:#211d2e; --surface2:#2b2640; --text:#eeeaf7; --muted:#aaa3c2; --line:#3a3452;
+    --accent:#c4b5fd; --accent-soft:#2e2650; --ok:#86efac; --ok-soft:#173523; --warn:#fdba74; --warn-soft:#3b2414;
+    --kurs:#5eead4; --cs:#93c5fd; --fall:#d8b4fe; --calc:#86efac; --allg:#fdba74;
+    --shadow:0 18px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15121f; --bg2:#1d1426; --surface:#211d2e; --surface2:#2b2640; --text:#eeeaf7; --muted:#aaa3c2; --line:#3a3452;
+  --accent:#c4b5fd; --accent-soft:#2e2650; --ok:#86efac; --ok-soft:#173523; --warn:#fdba74; --warn-soft:#3b2414;
+  --kurs:#5eead4; --cs:#93c5fd; --fall:#d8b4fe; --calc:#86efac; --allg:#fdba74;
+  --shadow:0 18px 40px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(1200px 600px at 0% -10%,var(--bg2),transparent 60%),radial-gradient(900px 500px at 100% 0%,var(--accent-soft),transparent 60%),var(--bg);background-attachment:fixed;color:var(--text);font:16px/1.55 "Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:880px;margin:0 auto;padding:24px 16px 64px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+header h1{font-size:2rem;font-weight:900;margin:0 0 4px;letter-spacing:-.02em;background:linear-gradient(90deg,#6366f1,#ec4899 45%,#f59e0b 75%,#10b981);-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:0;color:var(--muted);font-size:.92rem;max-width:560px}
+button{font:inherit;cursor:pointer}
+.btn{border:1.5px solid var(--line);background:var(--surface);color:var(--text);border-radius:999px;padding:7px 15px;font-size:.88rem;font-weight:700;transition:transform .12s,border-color .12s,box-shadow .12s}
+.btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(109,40,217,.15)}
+.btn:active{transform:translateY(0)}
+.search{position:relative;margin:20px 0 0}
+.search input{width:100%;font:inherit;font-size:1rem;font-weight:700;color:var(--text);background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:12px 44px 12px 46px;outline:none;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
+.search input::-webkit-search-cancel-button{display:none}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.search .si{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:1.05rem;pointer-events:none}
+.search .sx{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:var(--surface2);color:var(--muted);border-radius:50%;width:30px;height:30px;font-weight:800}
+.shint{font-size:.84rem;color:var(--muted);font-weight:700;margin:8px 4px 0}
+mark{background:#fde047;color:#1f1b2e;border-radius:4px;padding:0 2px}
+.front mark{background:#fef08a}
+.own-btn{background:linear-gradient(135deg,#6366f1,#ec4899);color:#fff;border-color:transparent}
+.own-btn:hover{border-color:transparent}
+.btn.primary{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.panel{background:var(--surface);border:1.5px solid var(--line);border-radius:22px;padding:18px;margin-top:18px;box-shadow:var(--shadow)}
+.panel .ph{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel h2{margin:0;font-size:1.2rem;font-weight:900}
+.panel h3{margin:0 0 10px;font-size:1rem;font-weight:800}
+.panel .warn{background:var(--warn-soft);border-left:4px solid var(--warn);border-radius:10px;padding:8px 12px;font-size:.88rem;margin:12px 0}
+.pgrid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}
+@media (max-width:640px){.pgrid{grid-template-columns:1fr}}
+.box{background:var(--surface2);border-radius:16px;padding:14px;margin-bottom:12px}
+.box label{display:flex;flex-direction:column;gap:4px;font-size:.82rem;font-weight:800;color:var(--muted);margin-bottom:10px}
+.box input:not([type=color]):not([type=file]),.box textarea,.box select{font:inherit;font-size:.95rem;font-weight:600;color:var(--text);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+.box textarea{resize:vertical}
+.box input[type=color]{width:100%;height:40px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);padding:3px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.io{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.io label.btn{display:inline-flex;flex-direction:row;margin:0;color:var(--text);font-size:.88rem}
+.pmsg{font-size:.86rem;font-weight:700;color:var(--ok);min-height:1.2em;margin:8px 0 0}
+.orow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.orow:last-child{border-bottom:0}
+.orow .ot{font-weight:800}
+.orow .oq{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.orow .acts{display:flex;gap:6px;flex-shrink:0}
+.mini{font-size:.76rem;padding:4px 10px}
+.tag.own{color:#db2777}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 10px}
+.chip{--c:var(--t-all);--c2:var(--t-all2);border:1.5px solid color-mix(in srgb,var(--c) 45%,transparent);background:var(--surface);color:var(--text);border-radius:999px;padding:5px 13px 5px 10px;font-size:.86rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:transform .12s}
+.chip:hover{transform:translateY(-1px)}
+.chip.zero{opacity:.4}
+.chip .e{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--c),var(--c2))}
+.chip .n{opacity:.65;font-size:.76rem;font-weight:800}
+.chip.on{background:linear-gradient(135deg,var(--c),var(--c2));color:#fff;border-color:transparent;box-shadow:0 6px 16px color-mix(in srgb,var(--c) 40%,transparent)}
+.chip.on .e{background:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 16px}
+.row label{font-size:.85rem;color:var(--muted);display:flex;gap:6px;align-items:center;font-weight:700}
+select{font:inherit;font-size:.85rem;font-weight:700;background:var(--surface);color:var(--text);border:1.5px solid var(--line);border-radius:999px;padding:6px 10px}
+.progress{height:12px;background:var(--surface2);border-radius:99px;overflow:hidden;display:flex;box-shadow:inset 0 1px 3px rgba(0,0,0,.08)}
+.progress i{display:block;height:100%;transition:width .4s}
+.pstats{display:flex;gap:16px;font-size:.84rem;color:var(--muted);margin:8px 0 18px;flex-wrap:wrap;font-weight:700}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+/* Karte mit Flip */
+.flip{perspective:1600px;cursor:pointer;outline:none}
+.flip:focus-visible .face{outline:3px solid var(--accent);outline-offset:3px}
+.face{transition:transform .18s ease-in}
+.face.turn{transform:rotateY(90deg)}
+.face.turn-in{transform:rotateY(-90deg);transition:none}
+.face{border-radius:22px;box-shadow:var(--shadow);min-height:360px;display:flex;flex-direction:column}
+.front{--c:var(--t-all);--c2:var(--t-all2);background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.16) 0 130px,transparent 131px),radial-gradient(circle at 0% 100%,rgba(255,255,255,.10) 0 95px,transparent 96px),linear-gradient(140deg,var(--c),var(--c2));color:#fff;padding:22px 24px 20px}
+.front .q{font-size:1.45rem;font-weight:800;line-height:1.35;margin:auto 0;padding:18px 0;text-wrap:balance}
+.front .hint{text-align:center;font-size:.82rem;opacity:.9;font-weight:700}
+.back{--c:var(--t-all);--c2:var(--t-all2);background:var(--surface);border-top:8px solid var(--c);padding:18px 22px 20px}
+.back .qs{font-weight:800;font-size:1rem;color:var(--c2);margin:6px 0 10px;line-height:1.35}
+:root[data-theme="dark"] .back .qs{color:var(--c)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .back .qs{color:var(--c)}}
+.meta{display:flex;justify-content:space-between;gap:8px;font-size:.78rem;flex-wrap:wrap;align-items:center}
+.topic{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:.72rem;display:inline-flex;align-items:center;gap:6px}
+.back .topic{color:var(--muted)}
+.ico{font-size:1rem}
+.tag{border-radius:999px;padding:2px 9px;font-weight:800;font-size:.72rem;border:1.5px solid currentColor;white-space:nowrap}
+.tag.kurs{color:var(--kurs)} .tag.cs{color:var(--cs)} .tag.fall{color:var(--fall)} .tag.calc{color:var(--calc)} .tag.allg{color:var(--allg)} .tag.fehlt{color:#dc2626}
+.badge.x{background:#fee2e2;color:#b91c1c}
+.todo{background:#fee2e2;color:#7f1d1d;border-left:4px solid #dc2626;padding:8px 12px;border-radius:10px;font-size:.9rem;margin-bottom:12px}
+:root[data-theme="dark"] .todo{background:#3b1414;color:#fecaca}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .todo{background:#3b1414;color:#fecaca}}
+ol.mc{list-style:upper-alpha;margin:10px 0 0;padding-left:26px;font-size:.92em;font-weight:700}
+ol.mc li{margin:3px 0}
+.front .tag{background:rgba(255,255,255,.95);border-color:transparent}
+.front .tag.kurs{color:#0f766e} .front .tag.cs{color:#1d4ed8} .front .tag.fall{color:#7e22ce} .front .tag.calc{color:#15803d} .front .tag.allg{color:#c2410c} .front .tag.fehlt{color:#dc2626} .front .badge.x{background:#fee2e2;color:#b91c1c}
+.badge{font-size:.7rem;border-radius:999px;padding:2px 8px;background:var(--accent-soft);color:var(--accent);font-weight:800;margin-right:4px;text-transform:none;letter-spacing:0}
+.badge.w{background:var(--surface2);color:var(--muted)}
+.front .badge{background:rgba(255,255,255,.25);color:#fff}
+.status{font-size:.74rem;font-weight:800;border-radius:999px;padding:2px 8px}
+.status.ok{background:var(--ok-soft);color:var(--ok)} .status.no{background:var(--warn-soft);color:var(--warn)}
+.front .status{background:rgba(255,255,255,.95)}
+.front .status.ok{color:#15803d} .front .status.no{color:#c2410c}
+.a{font-size:.98rem}
+.a p{margin:0 0 8px}
+.a ul,.a ol{margin:0 0 8px;padding-left:22px}
+.a li{margin:3px 0}
+.a li::marker{color:var(--c);font-weight:800}
+.a b{color:inherit}
+.a table{border-collapse:separate;border-spacing:0;font-size:.86rem;margin:6px 0 10px;width:100%;display:block;overflow-x:auto;border-radius:10px}
+.a th,.a td{border-bottom:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.a th{background:color-mix(in srgb,var(--c) 14%,var(--surface));font-weight:800}
+.f{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:color-mix(in srgb,var(--c) 9%,var(--surface2));border-left:4px solid var(--c);border-radius:10px;padding:9px 12px;display:block;margin:6px 0 10px;font-size:.86rem;white-space:pre-wrap;overflow-x:auto}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--surface2);border-radius:5px;padding:0 5px;font-size:.88em}
+.merk{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 16%,var(--surface)),color-mix(in srgb,var(--c2) 10%,var(--surface)));border-radius:12px;padding:9px 12px;font-size:.93rem;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start}
+.merk .mi{font-size:1.15rem;line-height:1.2}
+.trap{background:var(--warn-soft);border-left:4px solid var(--warn);padding:8px 12px;border-radius:10px;font-size:.88rem;margin-top:10px}
+.trap b:first-child{color:var(--warn)}
+.nav{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap}
+.nav .grp{display:flex;gap:8px}
+.rate-ok{background:linear-gradient(135deg,#22c55e,#15803d);border-color:transparent;color:#fff}
+.rate-no{background:linear-gradient(135deg,#fb923c,#c2410c);border-color:transparent;color:#fff}
+.rate-ok:hover,.rate-no:hover{border-color:transparent}
+.counter{font-size:.86rem;color:var(--muted);font-weight:800}
+.legend{margin-top:30px;font-size:.85rem;color:var(--muted);background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:14px 16px}
+.legend b{color:var(--text)}
+.legend ul{margin:8px 0 0;padding-left:18px}
+.legend li{margin:4px 0}
+.kbd{font-size:.78rem;color:var(--muted);margin-top:12px;text-align:center}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--surface);border-radius:22px}
+.list .item{--c:var(--t-all);--c2:var(--t-all2);background:var(--surface);border-radius:16px;border-left:6px solid var(--c);padding:14px 16px;margin-bottom:12px;box-shadow:0 2px 8px rgba(60,30,120,.06)}
+.list .item .qs{font-weight:800;font-size:1.02rem;margin:6px 0 8px;color:var(--text)}
+.list .item .topic{color:var(--muted)}
+/* Reiter */
+.tabs{display:flex;flex-wrap:wrap;gap:4px;margin:20px 0 0;background:var(--surface);border:1.5px solid var(--line);border-radius:999px;padding:4px;width:max-content;max-width:100%;box-shadow:0 2px 8px rgba(60,30,120,.06)}
+.tab{border:0;background:transparent;color:var(--muted);border-radius:999px;padding:8px 16px;white-space:nowrap;font-weight:800;font-size:.92rem;transition:background .12s,color .12s}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{background:linear-gradient(135deg,#6366f1,#ec4899);color:#fff;box-shadow:0 6px 16px rgba(99,102,241,.3)}
+.tab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+/* Quiz */
+.qz{--c:#6366f1;--c2:#db2777}
+.qintro{background:radial-gradient(circle at 100% 0%,rgba(255,255,255,.16) 0 120px,transparent 121px),linear-gradient(140deg,#6366f1,#db2777);color:#fff;border-radius:22px;padding:20px 22px;margin-top:18px;box-shadow:var(--shadow)}
+.qintro h2{margin:0;font-size:1.35rem;font-weight:900}
+.qintro .sub{margin:2px 0 10px;font-weight:700;opacity:.92}
+.qintro p{margin:0;font-size:.95rem}
+.qtools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 16px}
+.qitem{background:var(--surface);border-radius:20px;border-left:6px solid var(--c);padding:16px 18px 18px;margin-bottom:14px;box-shadow:0 2px 8px rgba(60,30,120,.06)}
+.qitem .qn{display:inline-block;font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--c),var(--c2));border-radius:999px;padding:3px 10px}
+.qitem .qt{font-weight:800;font-size:1.04rem;line-height:1.45;margin:10px 0 12px}
+.opts{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;background:var(--surface2);border:1.5px solid transparent;border-radius:14px;padding:9px 12px;font-size:.95rem;transition:background .15s,border-color .15s,opacity .15s}
+.opt .ol{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.82rem;background:var(--surface);color:var(--c2);border:1.5px solid var(--line)}
+:root[data-theme="dark"] .opt .ol{color:var(--accent)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .opt .ol{color:var(--accent)}}
+.opt .ot{padding-top:2px}
+.qitem.open .opt{opacity:.6}
+.qitem.open .opt.right{opacity:1;background:var(--ok-soft);border-color:var(--ok)}
+.qitem.open .opt.right .ol{background:var(--ok);color:var(--surface);border-color:var(--ok)}
+.sol{margin-top:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--ok) 12%,var(--surface)),var(--surface));border-left:4px solid var(--ok);border-radius:12px;padding:10px 14px;font-size:.95rem}
+.sol .sr{font-weight:900;color:var(--ok);margin:0 0 4px}
+.sol p:last-child{margin:0}
+.revbtn[aria-expanded="true"]{background:var(--surface2)}
+.qitem .fhead{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.fcat{font-size:.72rem;font-weight:800;border-radius:999px;padding:2px 9px;border:1.5px solid currentColor;color:var(--fc)}
+.fans{margin-top:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--fc) 12%,var(--surface)),var(--surface));border-left:4px solid var(--fc);border-radius:12px;padding:10px 14px;font-size:.95rem}
+.fans p{margin:0}
+.fans p+p,.fans p+ul,.fans p+ol,.fans ul+p,.fans ol+p,.fans .f+p{margin-top:8px}
+.fans ul,.fans ol{margin:6px 0 0;padding-left:22px}
+.fans li{margin:3px 0}
+.fans .trap{margin-top:10px}
+.fitem{border-left-color:var(--fc)}
+@media (max-width:520px){.qitem{padding:14px 14px 16px}.qintro{padding:18px 16px}.tab{padding:7px 10px;font-size:.84rem}.tabs{border-radius:20px}.tab .ti{display:none}}
+@media print{.tabs,.qtools,.revbtn{display:none}.qitem{break-inside:avoid;box-shadow:none}.qitem .sol{display:block!important}}
+@media (max-width:520px){.face{min-height:330px}.front{padding:18px 16px}.back{padding:16px 15px}.front .q{font-size:1.22rem}header h1{font-size:1.6rem}}
+@media (prefers-reduced-motion: reduce){.face,.btn,.chip,.progress i{transition:none}}
+@media print{body{background:#fff}.chips,.row,.nav,.kbd,.progress,.pstats,.top .btn{display:none}.list .item{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Lernkarten Modul 2</h1>
+      <p>Prozessaufnahme und Modellierung · 84 Karten aus dem Begleitskript (Stand 18.06.2026) · Prozessaufnahme, BPMN-Grundlagen, BPMN fortgeschritten, Wertstromanalyse · dazu Quiz, Ergänzungen und Kurs-Flashcards</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn own-btn" id="ownBtn">＋ Eigene Inhalte</button>
+      <button class="btn" id="viewBtn">Listenansicht</button>
+      <button class="btn" id="themeBtn">Hell/Dunkel</button>
+    </div>
+  </header>
+  <section class="panel" id="ownPanel" hidden>
+    <div class="ph"><h2>Eigene Themen und Karten</h2><button class="btn" id="ownClose">Schließen</button></div>
+    <p class="warn" id="ownWarn">Deine Ergänzungen werden <b>nur in diesem Browser</b> gespeichert. Browserdaten löschen, privates Fenster oder ein anderes Gerät = weg. Sichere sie deshalb mit <b>Export</b> oder <b>„HTML mit meinen Inhalten speichern“</b>.</p>
+    <div class="pgrid">
+      <form id="topicForm" class="box">
+        <h3>Neues Thema</h3>
+        <label>Name<input id="tName" required maxlength="40" placeholder="z. B. Fall Müller"></label>
+        <div class="two"><label>Farbe<input id="tColor" type="color" value="#0891b2"></label><label>Icon (Emoji)<input id="tIcon" maxlength="4" value="⭐"></label></div>
+        <button class="btn primary" type="submit">Thema anlegen</button>
+      </form>
+      <form id="cardForm" class="box">
+        <h3>Neue Karte</h3>
+        <label>Thema<select id="cTopic"></select></label>
+        <label>Frage (Vorderseite)<input id="cQ" required maxlength="300"></label>
+        <label>Antwort (Rückseite)<textarea id="cA" required rows="4" placeholder="Zeilenumbrüche bleiben erhalten. **fett** wird fett, Zeilen mit „- “ werden Aufzählung."></textarea></label>
+        <label>Merkbild (optional)<input id="cM" maxlength="300"></label>
+        <label>Falle/Hinweis (optional)<input id="cT" maxlength="400"></label>
+        <button class="btn primary" type="submit" id="cSubmit">Karte speichern</button>
+        <button class="btn" type="button" id="cCancel" hidden>Bearbeiten abbrechen</button>
+      </form>
+    </div>
+    <div class="box">
+      <h3>Meine Inhalte</h3>
+      <div id="ownList"></div>
+      <div class="io">
+        <button class="btn" id="expBtn">⬇ Export (JSON)</button>
+        <label class="btn" for="impFile">⬆ Import (JSON)</label><input id="impFile" type="file" accept=".json,application/json" hidden>
+        <button class="btn" id="htmlBtn">💾 HTML mit meinen Inhalten speichern</button>
+      </div>
+      <p class="pmsg" id="ownMsg" role="status"></p>
+    </div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Bereich wählen">
+    <button class="tab" role="tab" id="tabCards" aria-controls="cardsView" aria-selected="true"><span class="ti">🃏 </span>Lernkarten</button>
+    <button class="tab" role="tab" id="tabQuiz" aria-controls="quizView" aria-selected="false"><span class="ti">📝 </span>M02: Quiz</button>
+    <button class="tab" role="tab" id="tabFlash" aria-controls="flashView" aria-selected="false"><span class="ti">⚡ </span>M02: Flashcards</button>
+  </div>
+
+  <section id="flashView" class="qz" role="tabpanel" aria-labelledby="tabFlash" hidden>
+    <div class="qintro">
+      <h2>M02: Flashcards (20 Karten)</h2>
+      <div class="sub">Kurs-Flashcards Modul M02</div>
+      <p>Die 20 Kurs-Flashcards im Kurs-Wortlaut zum Selbst-Abfragen. Lies die Frage, beantworte sie für dich, und deck dann die Antwort auf. Nichts wird gespeichert. Vier Antworten brauchen noch Kursmaterial (rot markiert).</p>
+    </div>
+    <div class="qtools">
+      <button class="btn" id="fcAll">Alle Antworten aufdecken</button>
+      <button class="btn" id="fcNone">Alle verbergen</button>
+      <span class="counter" id="fcCount"></span>
+    </div>
+    <div id="flashList"></div>
+  </section>
+
+  <section id="quizView" class="qz" role="tabpanel" aria-labelledby="tabQuiz" hidden>
+    <div class="qintro">
+      <h2>M02: Quiz</h2>
+      <div class="sub">Modul 2: Prozessaufnahme und Modellierung</div>
+      <p>Nur für dich. Kein Test, nichts wird gespeichert. Lies die Frage, überlege selbst, und deck dann die Lösung auf.</p>
+    </div>
+    <div class="qtools">
+      <button class="btn" id="qzAll">Alle Lösungen aufdecken</button>
+      <button class="btn" id="qzNone">Alle verbergen</button>
+      <span class="counter" id="qzCount"></span>
+    </div>
+    <div id="quizList"></div>
+  </section>
+
+  <div id="cardsView" role="tabpanel" aria-labelledby="tabCards">
+  <div class="search">
+    <span class="si">🔎</span>
+    <input id="q" type="search" placeholder="Suchen: Begriff, BPMN-Element, Firma … (Taste /)" autocomplete="off" aria-label="Lernkarten durchsuchen">
+    <button class="sx" id="qx" aria-label="Suche leeren" hidden>✕</button>
+  </div>
+  <div class="shint" id="shint" hidden></div>
+  <div class="chips" id="chips"></div>
+  <div class="row">
+    <label>Anzeigen
+      <select id="filterSel">
+        <option value="all">alle Karten</option>
+        <option value="open">noch nicht gewusst</option>
+        <option value="no">nur „nochmal“</option>
+        <option value="sc">nur Selbstcheck-Fragen</option>
+        <option value="kf">nur Kurs-Flashcards</option>
+        <option value="fehlt">nur „Kursmaterial fehlt“</option>
+      </select>
+    </label>
+    <label>Quelle
+      <select id="srcSel">
+        <option value="all">alle</option>
+        <option value="kurs">Begleitskript</option>
+        <option value="calc">Eigener Selbstcheck</option>
+        <option value="cs">Kurs-Quiz</option>
+        <option value="fall">Kurs-Flashcard</option>
+        <option value="allg">Ergänzung, nicht im Skript</option>
+        <option value="fehlt">Kursmaterial fehlt</option>
+        <option value="own">Eigene Karte</option>
+      </select>
+    </label>
+    <button class="btn" id="shuffleBtn">Mischen</button>
+    <button class="btn" id="resetBtn">Fortschritt zurücksetzen</button>
+  </div>
+  <div class="progress" id="bar"></div>
+  <div class="pstats" id="pstats"></div>
+
+  <div id="deck"></div>
+  <div id="list" class="list" hidden></div>
+
+  <div class="legend">
+    <b>Quellen-Markierung auf jeder Karte</b>
+    <ul>
+      <li><span class="tag kurs">Begleitskript</span> aus dem Begleitskript Modul 2 (Stand 18.06.2026). <span class="badge">✔ Selbstcheck</span> Selbstcheck-Frage aus dem Kapitel.</li>
+      <li><span class="tag calc">Eigener Selbstcheck</span> Kapitel 4 hat keinen Selbstcheck. Diese fünf Fragen sind ergänzt, bleiben inhaltlich aber beim Skript.</li>
+      <li><span class="tag cs">Kurs-Quiz</span> die 10 Quizfragen aus dem Kurs. Die Hinweise unter der Lösung sind eigene, kritische Anmerkungen.</li>
+      <li><span class="tag fall">Kurs-Flashcard</span> Frage aus den 20 Kurs-Flashcards, Antwort selbst formuliert und am Skript ausgerichtet. <span class="badge">🃏 Kurs-Flashcard</span> markiert auch Skript-Karten, die eine Kurs-Flashcard abdecken (Kurs-Wortlaut steht unter der Antwort).</li>
+      <li><span class="tag allg">Ergänzung, nicht im Skript</span> allgemeines Fachwissen, das Quiz oder Flashcards abfragen, das Skript aber nicht erklärt (SIPOC, Gateway-Typen, Boundary Events, Steckbrief).</li>
+      <li><span class="tag fehlt">Kursmaterial fehlt</span> <span class="badge x">⚠ Kursmaterial fehlt</span> die Antwort braucht Kursmaterial, das nicht vorlag (Müller-Profil, Wagner-Fall, Digital Gemba Walk, Cross-Review). Der Text ist nur eine allgemeine Einordnung. Bitte ersetzen, sobald du das Material hast.</li>
+      <li><span class="tag own">Eigene Karte</span> von dir selbst angelegt (Button „＋ Eigene Inhalte“).</li>
+    </ul>
+  </div>
+  </div>
+</div>
+
+<script type="application/json" id="embedded-custom">null</script>
+<script>
+const TOPICS = {
+  kap1:"Prozessaufnahme", kap2:"BPMN-Grundlagen", kap3:"BPMN fortgeschritten & KI", kap4:"Wertstrom & Schwachstellen", quiz:"Quiz", erg:"Ergänzungen", kurs:"Kurs-Flashcards"
+};
+const ICON={kap1:"🔍",kap2:"🧩",kap3:"🛠️",kap4:"🔄",quiz:"📝",erg:"➕",kurs:"🃏"};
+const SRC = {own:"Eigene Karte", kurs:"Begleitskript", calc:"Eigener Selbstcheck", cs:"Kurs-Quiz", fall:"Kurs-Flashcard", allg:"Ergänzung, nicht im Skript", fehlt:"Kursmaterial fehlt"};
+
+const CARDS = [
+/* ---------- Kapitel 1 · Prozessaufnahme ---------- */
+{t:"kap1",s:"kurs",q:`Was besagt das Bild vom Prozess-Eisberg?`,
+ a:`<p>Nur ein kleiner Teil der Prozessrealität ist auf den ersten Blick sichtbar. Darunter liegen Workarounds, Ausnahmen, Medienbrüche und implizites Wissen.</p>`},
+{t:"kap1",s:"kurs",q:`Warum ist die Ist-Aufnahme die Grundlage jeder Prozessoptimierung?`,
+ a:`<p>Ohne sauberes Ist gibt es kein gutes Soll.</p>`},
+{t:"kap1",s:"kurs",kf:1,q:`Welche drei Methoden der Prozessaufnahme gibt es, und wie sollte man sie einsetzen?`,
+ a:`<p>Interview, Beobachtung (Gemba) und Dokumentenanalyse, im Idealfall kombiniert.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Nenne drei Methoden der Prozessaufnahme.“`},
+{t:"kap1",s:"kurs",q:`Interview als Aufnahmemethode: Stärke und Schwäche?`,
+ a:`<p>Stärke: tiefste Einblicke.<br>Schwäche: abhängig vom Gesprächspartner.</p>`},
+{t:"kap1",s:"kurs",q:`Beobachtung (Gemba) als Aufnahmemethode: Was ist das und was ist ihre Stärke?`,
+ a:`<p>„Geh dorthin, wo die Arbeit passiert“. Zeigt die tatsächliche statt der dokumentierten Realität.</p>`},
+{t:"kap1",s:"kurs",q:`Dokumentenanalyse als Aufnahmemethode: Stärke und Schwäche?`,
+ a:`<p>Stärke: breiter Überblick.<br>Schwäche: Dokumente sind oft veraltet oder idealisiert.</p>`},
+{t:"kap1",s:"kurs",q:`Wie kann KI bei der Dokumentenanalyse helfen?`,
+ a:`<p>KI (z. B. Claude/ChatGPT) hilft, Prozessschritte aus QM-Handbüchern und E-Mails zu extrahieren.</p>`},
+{t:"kap1",s:"kurs",q:`Welche Fragetechnik nutzt man im Prozess-Interview?`,
+ a:`<p>Offene Fragen („Erzähl mir, wie das abläuft“) statt geschlossener; W-Fragen systematisch stellen; bei Selbstverständlichkeiten nachhaken.</p>`},
+{t:"kap1",s:"kurs",q:`Welche sechs W-Fragen stellst du im Prozess-Interview systematisch?`,
+ a:`<p>Wer, Was, Wann, Wie, Womit, Warum.</p>`},
+{t:"kap1",s:"kurs",q:`Nenne die drei typischen Fallen im Prozess-Interview.`,
+ a:`<ol><li>Suggestivfragen</li><li>Den Wunschprozess statt der Realität erfassen</li><li>Nur Führungskräfte befragen</li></ol>`},
+{t:"kap1",s:"kurs",q:`Wer ist die Primärquelle bei der Prozessaufnahme?`,
+ a:`<p>Die Prozessausführenden, nicht die Führungskräfte.</p>`},
+{t:"kap1",s:"kurs",sc:"1.1",q:`Was meint der Prozess-Eisberg und welche Konsequenz hat er für die Aufnahme?`,
+ a:`<p>Nur die Spitze der Prozessrealität ist sichtbar; darunter liegen Workarounds, Ausnahmen, Medienbrüche und implizites Wissen.<br>Konsequenz: Man darf sich nicht auf das Offensichtliche oder Dokumentierte verlassen, sondern muss Methoden kombinieren (v. a. Beobachtung, Nachhaken bei Selbstverständlichkeiten), um das echte Ist zu erfassen. Ohne sauberes Ist kein gutes Soll.</p>`},
+{t:"kap1",s:"kurs",sc:"1.2",q:`Nenne die drei Aufnahmemethoden mit je einer Stärke und Schwäche.`,
+ a:`<p>Interview: + tiefste Einblicke / − abhängig vom Gesprächspartner<br>Beobachtung (Gemba): + zeigt die tatsächliche Realität / − (nicht im Skript genannt; typisch: aufwändig, Beobachtete verhalten sich evtl. anders)<br>Dokumentenanalyse: + breiter Überblick / − oft veraltet oder idealisiert</p>`},
+{t:"kap1",s:"kurs",sc:"1.3",q:`Warum sind die Prozessausführenden wichtiger als die Führungskraft?`,
+ a:`<p>Sie sind die Primärquelle: Sie kennen die tatsächliche Arbeit inkl. Workarounds, Ausnahmen und implizitem Wissen. Führungskräfte beschreiben eher den Wunsch- oder Sollprozess.</p>`},
+/* ---------- Kapitel 2 · BPMN-Grundlagen ---------- */
+{t:"kap2",s:"kurs",kf:1,q:`Wofür steht BPMN, und welcher Standard liegt BPMN 2.0 zugrunde?`,
+ a:`<p>Business Process Model and Notation; standardisiert als ISO/IEC 19510.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Was bedeutet BPMN?“`},
+{t:"kap2",s:"kurs",q:`Warum ist BPMN als gemeinsame Prozesssprache wertvoll?`,
+ a:`<p>Fachabteilung, IT und Management können sie gleichermaßen lesen, vergleichbar mit Noten in der Musik.</p>`},
+{t:"kap2",s:"kurs",q:`Was bedeutet die 80/20-Regel bei BPMN?`,
+ a:`<p>Mit wenigen Grundelementen modellierst du die meisten Prozesse.</p>`},
+{t:"kap2",s:"kurs",q:`Nenne die Grundbausteine von BPMN.`,
+ a:`<p>Events, Activities, Gateways, Sequence Flow, Message Flow, Pools und Lanes.</p>`},
+{t:"kap2",s:"kurs",q:`Welche drei Arten von Events unterscheidet das Skript?`,
+ a:`<p>Start-, Zwischen- und End-Event.</p>`},
+{t:"kap2",s:"kurs",q:`Wofür stehen in BPMN Activities, Gateways sowie Pools und Lanes?`,
+ a:`<p>Activities: Aufgaben<br>Gateways: Verzweigungen<br>Pools und Lanes: Beteiligte und Rollen</p>`},
+{t:"kap2",s:"kurs",kf:1,q:`Was ist der Unterschied zwischen Sequence Flow und Message Flow?`,
+ a:`<p>Sequence Flow: Ablauf innerhalb eines Pools.<br>Message Flow: Kommunikation zwischen Pools.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Was unterscheidet Sequence Flow von Message Flow?“`},
+{t:"kap2",s:"kurs",q:`Nenne die fünf häufigsten BPMN-Anfängerfehler.`,
+ a:`<ol><li>Kein Start- oder End-Event</li><li>Gateways nicht geschlossen (jeder Split braucht einen Join)</li><li>Bedingungen an Pfeilen vergessen (Default Flow markieren)</li><li>Message Flow innerhalb eines Pools</li><li>Zu viele Elemente in einem Diagramm</li></ol>`},
+{t:"kap2",s:"kurs",q:`Was gehört innerhalb eines Pools hin: Sequence Flow oder Message Flow?`,
+ a:`<p>Sequence Flow. Message Flow innerhalb eines Pools ist ein Anfängerfehler.</p>`},
+{t:"kap2",s:"kurs",q:`Was tust du gegen vergessene Bedingungen an Gateway-Pfeilen?`,
+ a:`<p>Bedingungen an die ausgehenden Pfeile schreiben und einen Default Flow markieren.</p>`},
+{t:"kap2",s:"kurs",q:`Welche Tools/Quellen nennt das Skript für BPMN?`,
+ a:`<p>Wikipedia: BPMN und bpmn.io (Modellierungs-Tool).</p>`},
+{t:"kap2",s:"kurs",sc:"2.1",q:`Wofür steht BPMN und warum ist eine gemeinsame Notation wertvoll?`,
+ a:`<p>Business Process Model and Notation (BPMN 2.0, ISO/IEC 19510). Wertvoll, weil Fachabteilung, IT und Management dieselbe standardisierte Sprache lesen, wie Noten in der Musik; das vermeidet Missverständnisse.</p>`},
+{t:"kap2",s:"kurs",sc:"2.2",q:`Was ist der Unterschied zwischen Sequence Flow und Message Flow?`,
+ a:`<p>Sequence Flow verbindet Elemente innerhalb eines Pools (Ablaufreihenfolge). Message Flow verbindet verschiedene Pools (Nachrichtenaustausch zwischen Beteiligten).</p>`},
+{t:"kap2",s:"kurs",sc:"2.3",q:`Nenne drei der fünf Anfängerfehler.`,
+ a:`<p>Drei aus: kein Start-/End-Event; Gateways nicht geschlossen; Bedingungen an Pfeilen vergessen; Message Flow innerhalb eines Pools; zu viele Elemente in einem Diagramm.</p>`},
+/* ---------- Kapitel 3 · BPMN fortgeschritten und KI-gestützt ---------- */
+{t:"kap3",s:"kurs",q:`Was sind Sub-Prozesse, und mit welchem Bild erklärt das Skript sie?`,
+ a:`<p>Hierarchische Zerlegung eines Prozesses, wie Zoom-Stufen in einer Karte.</p>`},
+{t:"kap3",s:"kurs",q:`Unterschied eingebetteter Sub-Prozess vs. Call Activity?`,
+ a:`<p>Eingebetteter Sub-Prozess: lebt im Elternprozess.<br>Call Activity: wiederverwendbar (ruft einen eigenständigen Prozess auf).</p>`},
+{t:"kap3",s:"kurs",q:`Welche Faustregel gilt für die Größe eines BPMN-Diagramms?`,
+ a:`<p>Max. 15–20 Elemente pro Diagramm, sonst zerlegen.</p>`},
+{t:"kap3",s:"kurs",kf:1,q:`Wofür nutzt man Timer Events, und welches Symbol haben sie?`,
+ a:`<p>Uhr-Symbol. Für zeitgesteuerte Starts, Wartezeiten und Deadlines.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Was ist ein Timer Event?“`},
+{t:"kap3",s:"kurs",q:`Was ist ein Error Boundary Event (Symbol, Zweck, Verhalten)?`,
+ a:`<p>Blitz am Rand einer Aktivität; dient der Fehlerbehandlung; ist immer unterbrechend (die Aktivität wird abgebrochen).</p>`},
+{t:"kap3",s:"kurs",q:`Wie benennt man Activities nach Best Practice? Beispiel?`,
+ a:`<p>Verb-Objekt, z. B. „Rechnung prüfen“.</p>`},
+{t:"kap3",s:"kurs",q:`Wie benennt man Events nach Best Practice? Beispiel?`,
+ a:`<p>Als Zustand, z. B. „Bestellung eingegangen“.</p>`},
+{t:"kap3",s:"kurs",q:`In welcher Reihenfolge und mit welchem Layout modellierst du?`,
+ a:`<p>Happy Path zuerst, Ausnahmen danach. Layout von links nach rechts, Ausnahmen nach unten.</p>`},
+{t:"kap3",s:"kurs",q:`Wofür kann KI beim BPMN-Modellieren eingesetzt werden?`,
+ a:`<p>Prozessbeschreibung in eine BPMN-Elementliste übersetzen; bestehende Modelle auf Fehler prüfen; Prozessvarianten (Ist, Soll, Automatisiert) generieren.</p>`},
+{t:"kap3",s:"kurs",q:`Welche Arbeitsteilung gilt zwischen dir und der KI beim Modellieren?`,
+ a:`<p>Die KI liefert den Entwurf, die fachliche Korrektheit prüfst du. (Und: erst selbst zeichnen, dann KI prüfen lassen.)</p>`},
+{t:"kap3",s:"kurs",sc:"3.1",kf:1,q:`Wann zerlegst du einen Prozess in Sub-Prozesse?`,
+ a:`<p>Wenn ein Diagramm zu groß wird (Faustregel: mehr als 15–20 Elemente). Außerdem für Teile, die wiederverwendet werden (dann als Call Activity).</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Wann nutzt du einen Sub-Prozess in BPMN?“`},
+{t:"kap3",s:"kurs",sc:"3.2",q:`Wozu dient ein Error Boundary Event?`,
+ a:`<p>Zur Fehlerbehandlung: Es sitzt (Blitz-Symbol) am Rand einer Aktivität, fängt dort auftretende Fehler ab, bricht die Aktivität immer ab und leitet in einen Ausnahmepfad.</p>`},
+{t:"kap3",s:"kurs",sc:"3.3",q:`Wie benennst du Activities und Events korrekt?`,
+ a:`<p>Activities als Verb-Objekt („Rechnung prüfen“), Events als Zustand („Bestellung eingegangen“).</p>`},
+/* ---------- Kapitel 4 · Wertstromanalyse und Schwachstellen ---------- */
+{t:"kap4",s:"kurs",q:`Woher stammt die Wertstromanalyse (VSM)?`,
+ a:`<p>Aus dem Toyota-Produktionssystem (Lean).</p>`},
+{t:"kap4",s:"kurs",kf:1,q:`Was zeigt eine Wertstromanalyse, und worauf liegt der Fokus?`,
+ a:`<p>Material- und Informationsfluss, mit Fokus auf die Zeit. Sie trennt wertschöpfende Zeit von Verschwendung.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Was ist Wertstromanalyse (VSM)?“`},
+{t:"kap4",s:"kurs",q:`Wie ergänzen sich BPMN und VSM?`,
+ a:`<p>BPMN zeigt die Logik, VSM zeigt, wo Zeit verloren geht.</p>`},
+{t:"kap4",s:"kurs",q:`Welche drei Kriterien muss eine wertschöpfende Tätigkeit erfüllen?`,
+ a:`<ol><li>Sie verändert das Produkt</li><li>Der Kunde würde dafür zahlen</li><li>Sie wird beim ersten Mal richtig gemacht</li></ol>`},
+{t:"kap4",s:"kurs",q:`Nenne Beispiele für nicht wertschöpfende Tätigkeiten.`,
+ a:`<p>Warten, Genehmigungsschleifen, Transport, Nacharbeit.</p>`},
+{t:"kap4",s:"kurs",q:`Wie berechnet man den Wertschöpfungsanteil?`,
+ a:`<p>Wertschöpfungsanteil = Wertschöpfungszeit / Gesamtdurchlaufzeit × 100 %</p>`},
+{t:"kap4",s:"kurs",q:`Rechenbeispiel Schadensmeldung: 45 Min Bearbeitung bei 30 Arbeitstagen Durchlaufzeit. Wie hoch ist der Wertschöpfungsanteil?`,
+ a:`<p>≈ 0,3 %.<br>Rechnung (mit 8-h-Arbeitstag): 30 × 8 × 60 = 14.400 Min; 45 / 14.400 ≈ 0,31 %.<br>Achtung: Mit Kalenderzeit (24 h) wären es nur ≈ 0,1 %. Die Zeitbasis immer angeben.</p>`},
+{t:"kap4",s:"kurs",q:`Warum ist der Wertschöpfungsanteil in Verwaltungsprozessen oft viel niedriger als bei physischer Wertschöpfung?`,
+ a:`<p>In reinen Verwaltungsprozessen besteht die Durchlaufzeit überwiegend aus Warten und Schleifen. Steckt physische Wertschöpfung im Strom (Backen, Ausliefern), liegt der Anteil deutlich höher. Merksatz: rechnen statt schätzen.</p>`},
+{t:"kap4",s:"kurs",kf:1,q:`Nenne die sieben Verschwendungsarten (Muda).`,
+ a:`<ol><li>Überproduktion</li><li>Wartezeit</li><li>Transport</li><li>Überbearbeitung</li><li>Bestände</li><li>Unnötige Bewegung</li><li>Fehler/Nacharbeit</li></ol>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Nenne drei der sieben Verschwendungsarten (Muda).“`},
+{t:"kap4",s:"kurs",q:`Welche achte Verschwendungsart nennt die moderne Lean-Erweiterung (im Kurs optional)?`,
+ a:`<p>Ungenutztes Mitarbeiter-Potenzial.</p>`},
+{t:"kap4",s:"kurs",q:`Wofür stehen Kaizen-Blitze in der Wertstromkarte, und welche Verbesserungshebel nennt das Skript?`,
+ a:`<p>Sie markieren Verbesserungspotenziale vom Ist zum Soll. Hebel: Zusammenlegen, Pull, Automatisieren, Parallelisieren.</p>`},
+{t:"kap4",s:"kurs",q:`Auf welchen vier Ebenen bewertet die Schwachstellenmatrix?`,
+ a:`<p>Zeit, Kosten, Qualität, Risiko.</p>`},
+{t:"kap4",s:"kurs",q:`Aus welchen vier Teilen besteht das kompakte Dokumentationspaket?`,
+ a:`<p>Prozesssteckbrief, BPMN-Modell, Wertstromkarte, Schwachstellenmatrix.</p>`},
+{t:"kap4",s:"calc",sc:"4.1 (eigener)",q:`Was unterscheidet die Wertstromanalyse von BPMN?`,
+ a:`<p>BPMN bildet die Ablauflogik ab (wer macht was in welcher Reihenfolge, mit welchen Verzweigungen). VSM bildet Material- und Informationsfluss mit Fokus auf Zeit ab und macht sichtbar, wo Zeit verloren geht (wertschöpfend vs. Verschwendung).</p>`},
+{t:"kap4",s:"calc",sc:"4.2 (eigener)",q:`Wann ist eine Tätigkeit wertschöpfend? Prüfe: „Antrag zur Freigabe an die Abteilungsleitung weiterleiten“.`,
+ a:`<p>Wertschöpfend = verändert das Produkt, Kunde würde zahlen, beim ersten Mal richtig.<br>Weiterleiten zur Freigabe verändert das Produkt nicht und der Kunde würde dafür nicht zahlen: nicht wertschöpfend (Genehmigungsschleife/Transport von Information).</p>`},
+{t:"kap4",s:"calc",sc:"4.3 (eigener)",q:`Ein Prozess hat 2 h Bearbeitungszeit bei 10 Arbeitstagen (à 8 h) Durchlaufzeit. Wertschöpfungsanteil?`,
+ a:`<p>2 h / (10 × 8 h) × 100 % = 2 / 80 × 100 % = 2,5 %.</p>`},
+{t:"kap4",s:"calc",sc:"4.4 (eigener)",q:`Nenne die sieben Verschwendungsarten und ordne zu: Ein Bericht wird ausführlicher erstellt als vom Empfänger benötigt.`,
+ a:`<p>Überproduktion, Wartezeit, Transport, Überbearbeitung, Bestände, unnötige Bewegung, Fehler/Nacharbeit.<br>Zuordnung: Überbearbeitung (mehr Aufwand/Qualität als gefordert). Wird der Bericht zusätzlich erstellt, obwohl ihn niemand braucht: Überproduktion.</p>`},
+{t:"kap4",s:"calc",sc:"4.5 (eigener)",q:`Wie kommst du vom Ist zum Soll, und was gehört ins Dokumentationspaket?`,
+ a:`<p>Im Ist-Wertstrom Verbesserungspotenziale mit Kaizen-Blitzen markieren (Zusammenlegen, Pull, Automatisieren, Parallelisieren) und Schwachstellen in der Matrix nach Zeit, Kosten, Qualität, Risiko bewerten.<br>Paket: Prozesssteckbrief, BPMN-Modell, Wertstromkarte, Schwachstellenmatrix.</p>`},
+/* ---------- Quiz Modul 2 ---------- */
+{t:"quiz",s:"cs",q:`Quiz 1: Angebotsprozess der Schreinerei, SIPOC-Methode. Wer ist der primäre „Customer“ (C)?<ol class="mc"><li>Holzhändler, der das Material liefert</li><li>Potenzieller Kunde, der eine Anfrage stellt</li><li>Schreiner, der das Angebot kalkuliert</li><li>Architekt, der die Baupläne erstellt</li></ol>`,
+ a:`<p><b>Richtig: B</b></p><p>Customer = Empfänger des Prozessergebnisses (Output). Beim Angebotsprozess ist das der anfragende Kunde, der das fertige Angebot erhält.</p>`,
+ trap:`Hinweis: SIPOC kommt im Begleitskript nicht vor, siehe Ergänzungskarte.`},
+{t:"quiz",s:"cs",q:`Quiz 2: Im Interview sagt Klaus Müller: „Dann wird das Angebot erstellt, das ist ja klar.“ Welche Reaktion entspricht der gelernten Fragetechnik?<ol class="mc"><li>Nicken und „Angebotserstellung“ notieren</li><li>„Erstellt das Angebot Ihr Meister oder die Bürokraft?“</li><li>„Wer genau erstellt das Angebot und welche Werkzeuge werden dafür genutzt?“</li><li>„Können wir den Schritt überspringen und zum Versand kommen?“</li></ol>`,
+ a:`<p><b>Richtig: C</b></p><p>Bei Selbstverständlichkeiten mit offenen W-Fragen nachhaken (Wer, Womit), um tatsächliche Schritte, Personen und Werkzeuge aufzudecken.<br>B ist eine geschlossene Entweder-oder-Frage und gibt die Antwort schon vor.</p>`},
+{t:"quiz",s:"cs",q:`Quiz 3: Bestellprozess Bäckerei Wagner. Filiale, Zentrale und Backstube sind interne Abteilungen derselben Firma und sollen sichtbar sein. Wie stellst du sie in BPMN dar?<ol class="mc"><li>Drei Pools mit Message Flows</li><li>Drei Lanes in einem Pool „Bäckerei Wagner“</li><li>Drei aufeinanderfolgende User Tasks</li><li>Drei Sub-Prozesse auf oberster Ebene</li></ol>`,
+ a:`<p><b>Richtig: B</b></p><p>Interne Abteilungen als Lanes in einem Pool. Pools stehen für eigenständige Teilnehmer (typisch externe Organisationen). User Tasks und Sub-Prozesse sind Aktivitäten, keine Organisationseinheiten.</p>`,
+ trap:`Kritik: „nur für externe Organisationen“ ist zu absolut, siehe Frage 4.`},
+{t:"quiz",s:"cs",q:`Quiz 4: Die Filiale (eigener Pool) sendet eine Bestellung an die Zentrale (zweiter Pool). Womit modellierst du den Informationsaustausch?<ol class="mc"><li>Sequence Flow, weil die Schritte nacheinander erfolgen</li><li>Message Flow zwischen den beiden Pools</li><li>Annotation</li><li>Gemeinsamer Sub-Prozess „Datenübertragung“</li></ol>`,
+ a:`<p><b>Richtig: B</b></p><p>Zwischen Pools nur Message Flow; Sequence Flow darf Pool-Grenzen nicht überschreiten.</p>`,
+ trap:`Kritik: Frage 3 sagt, Filiale und Zentrale gehören als Lanes in einen Pool. Hier sind sie zwei Pools. Beides ist modellierbar, aber die Fragen widersprechen sich.`},
+{t:"quiz",s:"cs",q:`Quiz 5: Belegprozess Hoffmann. „Wenn nach 14 Tagen eine Original-Rechnung immer noch fehlt, soll automatisch eine Mahnung an den Mandanten gehen.“ Welches BPMN-Symbol?<ol class="mc"><li>Exklusives Gateway, das prüft, ob 14 Tage vergangen sind</li><li>Error Event, weil eine fehlende Rechnung ein Fehler ist</li><li>Timer Event, angehängt an den Task „Warten auf Rechnung“</li><li>Paralleles Gateway, das den Mahnprozess startet</li></ol>`,
+ a:`<p><b>Richtig: C</b></p><p>Ein Timer Event modelliert den zeitbasierten Ausnahmepfad nach Ablauf der Frist. Error Events sind für technische/fachliche Fehler, ein Gateway kann nicht „warten“.</p>`,
+ trap:`Kritik: Ob unterbrechend oder nicht-unterbrechend, sagt die Lösung nicht. Soll nach der Mahnung weiter auf die Rechnung gewartet werden, ist ein nicht-unterbrechendes Timer-Boundary-Event (gestrichelt) richtig. Sauberer wäre ohnehin ein Event-basiertes Gateway (Rechnung eingegangen vs. 14 Tage vergangen) statt eines Tasks „Warten“.`},
+{t:"quiz",s:"cs",q:`Quiz 6: Schmidt-Logistik disponiert nach einer Frachtanfrage entweder Standard-LKW, Kühltransport oder Schwertransport, immer nur eine Option. Welches Gateway?<ol class="mc"><li>Parallel (AND)</li><li>Inklusiv (OR)</li><li>Exklusiv (XOR)</li><li>Event-basiert</li></ol>`,
+ a:`<p><b>Richtig: C</b></p><p>XOR: genau eine von mehreren Alternativen. Bedingungen an die Pfeile schreiben, Default Flow markieren.</p>`,
+ trap:`Hinweis: Gateway-Typen stehen nicht im Begleitskript, siehe Ergänzungskarte.`},
+{t:"quiz",s:"cs",q:`Quiz 7: Wertstromanalyse Wagner. Bestellungen werden abends gesammelt und erst am nächsten Morgen bearbeitet. Welche Verschwendungsart primär?<ol class="mc"><li>Überproduktion</li><li>Unnötiger Transport</li><li>Warten</li><li>Fehler</li></ol>`,
+ a:`<p><b>Richtig: C</b></p><p>Der Vorgang liegt unbearbeitet, die Wertschöpfung steht still.</p>`,
+ trap:`Anmerkung: Das Sammeln (Batching) erzeugt zugleich Bestände (liegende Bestellungen). „Primär“ macht C trotzdem zur besten Antwort.`},
+{t:"quiz",s:"cs",q:`Quiz 8: Welche zentrale Erkenntnis über Prozessaufnahme liefert der Hoffmann-Mailverlauf?<ol class="mc"><li>Prozesse sind meist perfekt dokumentiert und werden exakt befolgt</li><li>Der reale Ist-Prozess enthält oft unstrukturierte Schleifen und weicht von der Theorie ab</li><li>Interviews sind die einzig verlässliche Methode</li><li>Prozessaufnahme ist nur in Produktionsbetrieben sinnvoll</li></ol>`,
+ a:`<p><b>Richtig: B</b></p><p>Der Mailverlauf zeigt den tatsächlichen Ablauf voller Ausnahmen und Rückfragen, die in einer idealisierten Beschreibung fehlen (Prozess-Eisberg).</p>`},
+{t:"quiz",s:"cs",q:`Quiz 9: Wertstromkarte Wagner: Bearbeitungszeit 15 Minuten, Durchlaufzeit 8 Stunden. Was sagt das Verhältnis?<ol class="mc"><li>Geringer Wertschöpfungsanteil, hohe Liegezeiten</li><li>Die Mitarbeiter arbeiten sehr langsam</li><li>Fast 100 % wertschöpfend</li><li>Mit schnelleren Computern auf 15 Min reduzierbar</li></ol>`,
+ a:`<p><b>Richtig: A</b></p><p>15 / 480 Min ≈ 3,1 %. Der große Rest ist Warten bzw. Liegen.</p>`,
+ trap:`Kritik: Die Lösung setzt Bearbeitungszeit mit Wertschöpfung gleich. Nach der Skript-Definition ist auch Bearbeitungszeit nur teilweise wertschöpfend (z. B. Nacharbeit), der echte Anteil liegt also bei höchstens 3,1 %.`},
+{t:"quiz",s:"cs",q:`Quiz 10: Im Müller-Profil werden drei Workarounds erwähnt. Warum musst du sie als Digitalisierungsmanager verstehen?<ol class="mc"><li>Um Regelbrecher zu identifizieren</li><li>Weil Workarounds oft auf Schwachstellen oder fehlende Funktionen hinweisen</li><li>Um zu beweisen, dass die Doku fehlerhaft ist</li><li>Weil Workarounds immer ineffizient sind und sofort weg müssen</li></ol>`,
+ a:`<p><b>Richtig: B</b></p><p>Workarounds zeigen, wo der offizielle Prozess lückenhaft ist oder die Realität nicht abbildet. Sie sind ein Startpunkt für echte Verbesserungen.</p>`,
+ trap:`Anmerkung: Die Antwort sagt „Soll-Prozess“. Gemeint ist der offizielle bzw. vorgegebene Prozess; ein Soll im Sinne der Optimierung gibt es da noch nicht.`},
+/* ---------- Ergänzungen (nicht im Skript) ---------- */
+{t:"erg",s:"allg",kf:1,q:`Wofür steht SIPOC?`,
+ a:`<p>Supplier, Input, Process, Output, Customer. Grobe Prozessübersicht auf einer Seite: wer liefert was, welche 5–7 Hauptschritte, was kommt heraus, wer empfängt es. Customer = Empfänger des Outputs.</p>`,
+ s2:`Kurs-Wortlaut der Flashcard: „Was ist eine SIPOC-Analyse?“`},
+{t:"erg",s:"allg",q:`Welche vier Gateway-Typen braucht man in BPMN, und wann nutzt man welchen?`,
+ a:`<p>XOR (exklusiv, „X“): genau ein Pfad.<br>AND (parallel, „+“): alle Pfade gleichzeitig, kein Bedingungstext.<br>OR (inklusiv, „O“): ein oder mehrere Pfade.<br>Event-basiert: das zuerst eintretende Ereignis entscheidet (z. B. Nachricht kommt vs. Frist läuft ab).</p>`},
+{t:"erg",s:"allg",q:`Unterbrechendes vs. nicht-unterbrechendes Boundary Event?`,
+ a:`<p>Unterbrechend (durchgezogener Rand): Die Aktivität wird abgebrochen, der Prozess läuft nur im Ausnahmepfad weiter.<br>Nicht-unterbrechend (gestrichelter Rand): Die Aktivität läuft weiter, zusätzlich startet ein paralleler Pfad (z. B. Erinnerung/Mahnung).<br>Error Boundary Events sind immer unterbrechend, Timer- und Message-Boundary-Events gibt es in beiden Varianten.</p>`},
+/* ---------- Kurs-Flashcards ---------- */
+{t:"kurs",s:"fall",kf:1,q:`Was ist der Unterschied zwischen Soll- und Ist-Prozess?`,
+ a:`<p>Ist-Prozess: wie der Prozess heute tatsächlich abläuft, inkl. Workarounds, Ausnahmen, Medienbrüchen.<br>Soll-Prozess: der angestrebte, verbesserte Zielprozess.<br>Merksatz aus dem Skript: Ohne sauberes Ist kein gutes Soll.</p>`},
+{t:"kurs",s:"fall",kf:1,q:`Was ist der Unterschied zwischen Pool und Lane in BPMN?`,
+ a:`<p>Pool: ein eigenständiger Prozessbeteiligter (typisch eine Organisation). Zwischen Pools nur Message Flow.<br>Lane: Unterteilung innerhalb eines Pools für Rollen oder Abteilungen. Zwischen Lanes läuft Sequence Flow.</p>`},
+{t:"kurs",s:"fall",kf:1,q:`Was ist ein exklusives Gateway (XOR)?`,
+ a:`<p>Eine Verzweigung, bei der genau einer von mehreren Pfaden genommen wird (Raute mit „X“ oder leer). Bedingungen an die ausgehenden Pfeile schreiben, Default Flow markieren. Beim Zusammenführen wartet es nicht, sondern lässt den ankommenden Pfad durch.</p>`},
+{t:"kurs",s:"fall",kf:1,q:`Wofür steht bpmn.io?`,
+ a:`<p>bpmn.io „steht“ für nichts, es ist kein Akronym. Es ist ein kostenloses, browserbasiertes Open-Source-Werkzeug (von Camunda) zum Zeichnen von BPMN-Diagrammen.</p>`,
+ trap:`Die Frage ist schief gestellt; gemeint ist wohl „Was ist bpmn.io?“`},
+{t:"kurs",s:"fall",kf:1,q:`Was ist ein Error Event?`,
+ a:`<p>Ein Ereignis (Blitz-Symbol) für Fehlerbehandlung. Als End-Event wirft es einen Fehler; als Boundary Event am Rand einer Aktivität fängt es ihn ab, bricht die Aktivität immer ab und leitet in einen Ausnahmepfad.</p>`},
+{t:"kurs",s:"allg",kf:1,q:`Was ist der Zweck eines Prozess-Steckbriefs?`,
+ a:`<p>Eine einseitige Kurzbeschreibung eines Prozesses als Teil des Dokumentationspakets (mit BPMN-Modell, Wertstromkarte, Schwachstellenmatrix). Typischer Inhalt: Name, Ziel, Prozesseigner, Start und Ende, Input/Output, Kunden, Beteiligte, IT-Systeme, Kennzahlen.</p>`,
+ trap:`Inhalt ist eine Ergänzung aus allgemeinem Wissen; das Skript nennt den Steckbrief nur. Mit eurer Kursvorlage abgleichen.`},
+{t:"kurs",s:"fehlt",kf:1,fehlt:1,q:`Beispiel: Workaround bei der Müller-Schreinerei.`,
+ a:`<p>Laut Quiz nennt das Profil drei Workarounds. Allgemein gilt: Ein Workaround ist ein inoffizieller Umweg, der eine Lücke im offiziellen Prozess oder System überbrückt, und damit ein Hinweis auf eine Schwachstelle.</p>`,
+ todo:`Antwort aus Kursmaterial ergänzen (Müller-Profil, das mir nicht vorliegt).`},
+{t:"kurs",s:"fehlt",kf:1,fehlt:1,q:`Was ist ein „Digital Gemba Walk“?`,
+ a:`<p>Naheliegende Lesart: Gemba-Prinzip (dort hinschauen, wo die Arbeit passiert) übertragen auf digitale Arbeit, also Mitarbeitenden am Bildschirm über die Schulter schauen, Klickwege, Systemwechsel und Medienbrüche beobachten.</p>`,
+ todo:`Antwort aus Kursmaterial ergänzen. Der Begriff steht nicht im Skript und ist kein feststehender Fachbegriff.`},
+{t:"kurs",s:"fall",kf:1,q:`Was ist der Unterschied zwischen Durchlauf- und Bearbeitungszeit?`,
+ a:`<p>Durchlaufzeit: gesamte Zeit vom Start bis zum Ende des Prozesses, inkl. Warte- und Liegezeiten.<br>Bearbeitungszeit: Zeit, in der aktiv am Vorgang gearbeitet wird.<br>Achtung: Bearbeitungszeit ist nicht automatisch Wertschöpfungszeit (z. B. Nacharbeit).</p>`},
+{t:"kurs",s:"fall",kf:1,q:`Wozu dient eine Schwachstellenmatrix?`,
+ a:`<p>Sie sammelt die gefundenen Schwachstellen eines Prozesses und bewertet sie auf vier Ebenen: Zeit, Kosten, Qualität, Risiko. So lassen sich Verbesserungen priorisieren. Teil des Dokumentationspakets.</p>`},
+{t:"kurs",s:"fehlt",kf:1,fehlt:1,q:`Beispiel: Prozessbeteiligte bei Wagner-Filialen.`,
+ a:`<p>Aus dem Quiz bekannt: Filiale, Zentrale und Backstube (interne Abteilungen, in BPMN als Lanes in einem Pool „Bäckerei Wagner“). Weitere Beteiligte (z. B. Kunden, Lieferanten, Fahrer) stehen vermutlich im Fallmaterial.</p>`,
+ todo:`Antwort aus Kursmaterial ergänzen.`},
+{t:"kurs",s:"fehlt",kf:1,fehlt:1,q:`Was ist der Zweck eines Cross-Reviews von BPMN-Modellen?`,
+ a:`<p>Allgemein: Andere prüfen dein Modell (und du ihres) auf Notationsfehler (z. B. die fünf Anfängerfehler), fachliche Korrektheit und Verständlichkeit. Wer den Prozess nicht kennt, merkt am schnellsten, was unklar ist.</p>`,
+ todo:`Genaue Kursdefinition aus Kursmaterial ergänzen.`},
+];
+const BASE_TOPICS=Object.keys(TOPICS);
+const CUSTOM_KEY="m02-lernkarten-custom";
+let custom={topics:[],cards:[]};
+let storageOk=true;
+(function loadCustom(){
+  let emb=null; try{emb=JSON.parse(document.getElementById("embedded-custom").textContent||"null");}catch(e){}
+  let ls=null; try{ls=JSON.parse(localStorage.getItem(CUSTOM_KEY)||"null"); localStorage.setItem(CUSTOM_KEY+"-probe","1"); localStorage.removeItem(CUSTOM_KEY+"-probe");}catch(e){storageOk=false;}
+  custom=ls||emb||custom;
+  if(ls&&emb){for(const t of emb.topics||[]) if(!custom.topics.some(x=>x.id===t.id)) custom.topics.push(t); for(const c of emb.cards||[]) if(!custom.cards.some(x=>x.id===c.id)) custom.cards.push(c);}
+  if(!custom.topics) custom.topics=[]; if(!custom.cards) custom.cards=[];
+})();
+function saveCustom(){try{localStorage.setItem(CUSTOM_KEY,JSON.stringify(custom));return true;}catch(e){storageOk=false;return false;}}
+function fmtOwn(t){
+  const e=t.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m])).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  const lines=e.split(/\r?\n/); let out="",inl=false;
+  for(const l of lines){ if(/^\s*[-•]\s+/.test(l)){ if(!inl){out+="<ul>";inl=true;} out+="<li>"+l.replace(/^\s*[-•]\s+/,"")+"</li>"; } else { if(inl){out+="</ul>";inl=false;} if(l.trim()) out+="<p>"+l+"</p>"; } }
+  if(inl) out+="</ul>"; return out;
+}
+function ownCardObj(o){return {t:o.t,s:"own",own:true,oid:o.id,q:o.q,a:fmtOwn(o.a),merk:o.merk?o.merk.replace(/[&<>]/g,""):"",trap:o.trap?fmtOwn(o.trap).replace(/^<p>|<\/p>$/g,""):"",id:"own:"+o.id};}
+function applyCustomTopics(){
+  for(const k of Object.keys(TOPICS)) if(!BASE_TOPICS.includes(k)) {delete TOPICS[k];delete ICON[k];}
+  for(const t of custom.topics){TOPICS[t.id]=t.name;ICON[t.id]=t.icon||"⭐";}
+  /* Die Kurs-Flashcards haben jetzt einen eigenen Reiter. Früher selbst angelegte Karten im Thema „Flashcards“ bleiben als Lernkarten sichtbar. */
+  if(custom.cards.some(c=>c.t==="flash")) TOPICS.flash="Flashcards (eigene)";
+}
+applyCustomTopics();
+for(const o of custom.cards) if(TOPICS[o.t]) CARDS.push(ownCardObj(o));
+
+/* ---------- state ---------- */
+const KEY="m02-lernkarten-v1";
+let state={r:{},topic:"all",filter:"all",src:"all",order:null,idx:0,view:"deck"};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s) state=Object.assign(state,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+CARDS.forEach(c=>{if(!c.own)c.id=c.q;});
+const IDS=CARDS.map(c=>c.id);
+if(!state.order) state.order=IDS.slice();
+state.order=state.order.filter(id=>IDS.includes(id)).concat(IDS.filter(id=>!state.order.includes(id)));
+const BYID=Object.fromEntries(CARDS.map(c=>[c.id,c]));
+let flipped=false;
+if(state.topic!=="all"&&!TOPICS[state.topic]) state.topic="all";
+
+let query="";
+const norm=t=>t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ß/g,"ss");
+const strip=h=>h.replace(/<[^>]+>/g," ").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">");
+CARDS.forEach(c=>{c.hay=norm([c.q,strip(c.a),c.merk||"",strip(c.trap||""),c.k||"",TOPICS[c.t],SRC[c.s],c.s2||"",c.todo||""].join(" "));});
+function terms(){return norm(query).split(/\s+/).filter(Boolean);}
+function matches(c){const t=terms();return t.every(w=>c.hay.includes(w));}
+function visible(){
+  return state.order.map(i=>BYID[i]).filter(c=>matches(c) &&
+    (state.topic==="all"||c.t===state.topic) &&
+    (state.src==="all"||c.s===state.src) &&
+    (state.filter==="all"||(state.filter==="open"&&state.r[c.id]!=="ok")||(state.filter==="no"&&state.r[c.id]==="no")||(state.filter==="sc"&&c.sc)||(state.filter==="kf"&&c.kf)||(state.filter==="fehlt"&&c.fehlt)));
+}
+function esc(s){return s.replace(/[&<>]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[m]));}
+
+function tvars(t){if(!t)return "";const ct=custom.topics.find(x=>x.id===t);if(ct)return `--c:${ct.color};--c2:color-mix(in srgb,${ct.color} 65%,black)`;return `--c:var(--t-${t});--c2:var(--t-${t}2)`;}
+function renderChips(){
+  const el=document.getElementById("chips"); el.innerHTML="";
+  const mk=(k,label,n)=>{const b=document.createElement("button");b.className="chip"+(state.topic===k?" on":"")+(n===0&&query?" zero":"");if(k!=="all")b.style.cssText=tvars(k);b.innerHTML=`<span class="e"></span>${label}<span class="n">${n}</span>`;b.onclick=()=>{state.topic=k;state.idx=0;flipped=false;save();render();};el.appendChild(b);};
+  mk("all","Alle",CARDS.filter(matches).length);
+  for(const k in TOPICS) mk(k,TOPICS[k],CARDS.filter(c=>c.t===k&&matches(c)).length);
+}
+function renderProgress(){
+  const pool=CARDS.filter(c=>state.topic==="all"||c.t===state.topic);
+  const ok=pool.filter(c=>state.r[c.id]==="ok").length, no=pool.filter(c=>state.r[c.id]==="no").length, n=pool.length;
+  document.getElementById("bar").innerHTML=`<i style="width:${ok/n*100}%;background:linear-gradient(90deg,#4ade80,#16a34a)"></i><i style="width:${no/n*100}%;background:linear-gradient(90deg,#fdba74,#ea580c)"></i>`;
+  document.getElementById("pstats").innerHTML=`<span><span class="dot" style="background:#22c55e"></span>gewusst ${ok}</span><span><span class="dot" style="background:#f97316"></span>nochmal ${no}</span><span><span class="dot" style="background:var(--surface2);border:1px solid var(--line)"></span>offen ${n-ok-no}</span><span>${TOPICS[state.topic]||"Alle Themen"}: ${Math.round(ok/n*100)} % gewusst</span>`;
+}
+function statusHTML(c){return state.r[c.id]==="ok"?'<span class="status ok">✓ gewusst</span>':state.r[c.id]==="no"?'<span class="status no">↻ nochmal</span>':'';}
+function metaHTML(c){
+  return `<div class="meta"><span class="topic"><span class="ico">${ICON[c.t]}</span>${TOPICS[c.t]}</span><span>${statusHTML(c)} <span class="tag ${c.s}">${SRC[c.s]}</span></span></div>
+  ${c.sc||c.w||c.k||c.kf||c.fehlt?`<div style="margin-top:8px">${c.k?`<span class="badge">${c.k}</span>`:""}${c.sc?`<span class="badge">✔ Selbstcheck ${c.sc}</span>`:""}${c.kf?`<span class="badge">🃏 Kurs-Flashcard</span>`:""}${c.fehlt?`<span class="badge x">⚠ Kursmaterial fehlt</span>`:""}${c.w?`<span class="badge w">📖 Weiterlesen</span>`:""}</div>`:""}`;
+}
+function answerHTML(c){
+  return `<div class="a">${c.todo?`<div class="todo"><b>⚠ Kursmaterial fehlt:</b> ${c.todo}</div>`:""}${c.merk?`<div class="merk"><span class="mi">💡</span><span><b>Merkbild:</b> ${c.merk}</span></div>`:""}${c.a}${c.trap?`<div class="trap"><b>⚠ Falle/Hinweis:</b> ${c.trap}</div>`:""}${c.s2?`<p style="font-size:.8rem;color:var(--muted);margin-top:8px">${c.s2}</p>`:""}</div>`;
+}
+function faceHTML(c){return flipped?`${metaHTML(c)}<div class="qs">${c.q}</div>${answerHTML(c)}`:`${metaHTML(c)}<div class="q">${c.q}</div><div class="hint">↻ Antippen oder Leertaste zum Umdrehen</div>`;}
+let flipping=false;
+function renderDeck(){
+  const v=visible(), el=document.getElementById("deck");
+  if(!v.length){el.innerHTML=`<div class="empty">Keine Karten in dieser Auswahl. ${state.filter!=="all"?"Alles gewusst? Stell „Anzeigen“ auf „alle Karten“.":""}</div>`;return;}
+  if(state.idx>=v.length) state.idx=0;
+  const c=v[state.idx];
+  el.innerHTML=`<div class="flip" id="card" tabindex="0" role="button" aria-label="Karte umdrehen" style="${tvars(c.t)}">
+    <div class="face ${flipped?"back":"front"}" id="face" style="${tvars(c.t)}">${faceHTML(c)}</div></div>
+  <div class="nav"><div class="grp"><button class="btn" id="prev">← Zurück</button><button class="btn" id="next">Weiter →</button></div>
+  <span class="counter">Karte ${state.idx+1} von ${v.length}</span>
+  <div class="grp"><button class="btn rate-no" id="no">↻ Nochmal</button><button class="btn rate-ok" id="ok">✓ Gewusst</button></div></div>
+  <div class="kbd">Tasten: Leertaste umdrehen · ← → blättern · 1 nochmal · 2 gewusst</div>`;
+  document.getElementById("card").onclick=e=>{if(e.target.closest("a"))return;flip();};
+  document.getElementById("prev").onclick=()=>move(-1);
+  document.getElementById("next").onclick=()=>move(1);
+  document.getElementById("no").onclick=()=>rate("no");
+  document.getElementById("ok").onclick=()=>rate("ok");
+}
+function renderList(){
+  const v=visible();
+  document.getElementById("list").innerHTML=v.length?v.map(c=>`<div class="item" style="${tvars(c.t)}">${metaHTML(c)}<div class="qs">${c.q}</div>${answerHTML(c)}</div>`).join(""):`<div class="empty">Keine Karten in dieser Auswahl.</div>`;
+}
+function highlight(root){
+  const t=terms(); if(!t.length||!root) return;
+  const re=new RegExp("("+t.map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|")+")","gi");
+  const walk=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest("mark,button,.tag,.badge,.status")?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[];while(walk.nextNode())nodes.push(walk.currentNode);
+  for(const n of nodes){
+    const txt=n.nodeValue, nt=norm(txt); if(nt.length!==txt.length) { if(!re.test(txt)) continue; re.lastIndex=0; const span=document.createElement("span"); span.innerHTML=esc(txt).replace(re,"<mark>$1</mark>"); n.replaceWith(span); continue; }
+    let idx=[],m; const rn=new RegExp(re.source,"gi"); while((m=rn.exec(nt))){idx.push([m.index,m.index+m[0].length]); if(!m[0].length)break;}
+    if(!idx.length) continue;
+    const frag=document.createDocumentFragment(); let last=0;
+    for(const [a,b] of idx){frag.append(txt.slice(last,a));const mk=document.createElement("mark");mk.textContent=txt.slice(a,b);frag.append(mk);last=b;}
+    frag.append(txt.slice(last)); n.replaceWith(frag);
+  }
+}
+function renderHint(){
+  const h=document.getElementById("shint"), x=document.getElementById("qx");
+  x.hidden=!query;
+  if(!query){h.hidden=true;return;}
+  const n=visible().length, all=CARDS.filter(matches).length;
+  h.hidden=false;
+  h.textContent=all===0?`Keine Karte enthält „${query}“.`:`${n} Treffer${n!==all?` in dieser Auswahl (${all} insgesamt, Thema/Filter auf „Alle“ stellen für mehr)`:""} für „${query}“ · Esc leert die Suche`;
+}
+function render(){
+  renderChips();renderProgress();renderHint();
+  document.getElementById("filterSel").value=state.filter;
+  document.getElementById("srcSel").value=state.src;
+  const deck=state.view==="deck";
+  document.getElementById("deck").hidden=!deck;document.getElementById("list").hidden=deck;
+  document.getElementById("viewBtn").textContent=deck?"Listenansicht":"Kartenansicht";
+  deck?renderDeck():renderList();
+  highlight(document.getElementById(deck?"deck":"list"));
+}
+function flip(){
+  const f=document.getElementById("face"); if(!f||flipping) return;
+  const v=visible(); const c=v[state.idx];
+  const swap=()=>{flipped=!flipped;f.className="face "+(flipped?"back":"front");f.innerHTML=faceHTML(c);highlight(f);};
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches){swap();return;}
+  flipping=true; f.classList.add("turn");
+  setTimeout(()=>{swap();f.classList.add("turn-in");void f.offsetWidth;f.classList.remove("turn-in");flipping=false;},180);
+}
+function move(d){const n=visible().length;if(!n)return;state.idx=(state.idx+d+n)%n;flipped=false;save();renderDeck();highlight(document.getElementById("deck"));}
+function rate(r){
+  const v=visible(); if(!v.length)return; const c=v[state.idx];
+  state.r[c.id]=r; flipped=false;
+  const nv=visible();
+  if(nv.length===v.length) state.idx=(state.idx+1)%nv.length; else if(state.idx>=nv.length) state.idx=0;
+  save(); renderProgress(); renderHint(); renderDeck(); highlight(document.getElementById("deck"));
+}
+document.getElementById("filterSel").onchange=e=>{state.filter=e.target.value;state.idx=0;flipped=false;save();render();};
+document.getElementById("srcSel").onchange=e=>{state.src=e.target.value;state.idx=0;flipped=false;save();render();};
+document.getElementById("shuffleBtn").onclick=()=>{const a=state.order.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}state.order=a;state.idx=0;flipped=false;save();render();};
+document.getElementById("resetBtn").onclick=()=>{state.r={};state.order=IDS.slice();state.idx=0;flipped=false;save();render();};
+document.getElementById("viewBtn").onclick=()=>{state.view=state.view==="deck"?"list":"deck";save();render();};
+document.getElementById("themeBtn").onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem(KEY+"-theme",r.dataset.theme);}catch(e){}};
+try{const t=localStorage.getItem(KEY+"-theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}
+document.addEventListener("keydown",e=>{
+  if(typeof activeTab!=="undefined"&&activeTab!=="cards") return;
+  if(e.key==="/"&&e.target.tagName!=="INPUT"){e.preventDefault();document.getElementById("q").focus();return;}
+  if(e.target.id==="q"){if(e.key==="Escape"){setQuery("");e.target.blur();}return;}
+  if(state.view!=="deck"||e.target.tagName==="SELECT")return;
+  if(e.key===" "){e.preventDefault();flip();}
+  else if(e.key==="ArrowRight")move(1);
+  else if(e.key==="ArrowLeft")move(-1);
+  else if(e.key==="1")rate("no");
+  else if(e.key==="2")rate("ok");
+});
+/* ---------- eigene Inhalte ---------- */
+function hayOf(c){return norm([c.q,strip(c.a),c.merk||"",strip(c.trap||""),c.k||"",TOPICS[c.t],SRC[c.s],c.s2||"",c.todo||""].join(" "));}
+function rebuildCustom(){
+  applyCustomTopics();
+  for(let i=CARDS.length-1;i>=0;i--) if(CARDS[i].own) CARDS.splice(i,1);
+  for(const o of custom.cards) if(TOPICS[o.t]){const c=ownCardObj(o);c.hay=hayOf(c);CARDS.push(c);}
+  IDS.length=0; CARDS.forEach(c=>IDS.push(c.id));
+  for(const k of Object.keys(BYID)) delete BYID[k]; CARDS.forEach(c=>BYID[c.id]=c);
+  state.order=state.order.filter(id=>IDS.includes(id)).concat(IDS.filter(id=>!state.order.includes(id)));
+  if(!TOPICS[state.topic]&&state.topic!=="all") state.topic="all";
+  save(); render(); renderOwn();
+}
+function msg(t,bad){const m=document.getElementById("ownMsg");m.textContent=t;m.style.color=bad?"var(--warn)":"var(--ok)";}
+function persist(okText){const ok=saveCustom();msg(ok?okText:okText+" Achtung: Der Browser blockiert die Speicherung. Bitte jetzt exportieren!",!ok);rebuildCustom();}
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let editId=null;
+function renderOwn(){
+  const sel=document.getElementById("cTopic"), cur=sel.value;
+  sel.innerHTML=Object.keys(TOPICS).map(k=>`<option value="${k}">${ICON[k]} ${esc(TOPICS[k])}${custom.topics.some(t=>t.id===k)?" (eigenes)":""}</option>`).join("");
+  if(cur&&TOPICS[cur]) sel.value=cur; else if(custom.topics.length) sel.value=custom.topics[custom.topics.length-1].id;
+  const L=document.getElementById("ownList");
+  const tl=custom.topics.map(t=>`<div class="orow"><span class="ot" style="color:${t.color}">${t.icon} ${esc(t.name)}</span><span class="oq" style="color:var(--muted)">${custom.cards.filter(c=>c.t===t.id).length} Karten</span><span class="acts"><button class="btn mini" data-deltopic="${t.id}">Thema löschen</button></span></div>`).join("");
+  const cl=custom.cards.map(c=>`<div class="orow"><span class="ot">${ICON[c.t]||"?"}</span><span class="oq">${esc(c.q)}</span><span class="acts"><button class="btn mini" data-edit="${c.id}">Bearbeiten</button><button class="btn mini" data-delcard="${c.id}">Löschen</button></span></div>`).join("");
+  L.innerHTML=(tl||cl)?(tl?`<p style="font-weight:800;margin:0 0 4px">Themen</p>${tl}`:"")+(cl?`<p style="font-weight:800;margin:12px 0 4px">Karten</p>${cl}`:""):`<p style="color:var(--muted);margin:0">Noch keine eigenen Themen oder Karten. Eigene Karten kannst du auch zu den vorhandenen Themen hinzufügen.</p>`;
+  document.getElementById("ownWarn").style.display="";
+  if(!storageOk) document.getElementById("ownWarn").innerHTML="<b>Dieser Browser erlaubt hier keine Speicherung.</b> Ergänzungen gehen beim Schließen verloren, wenn du sie nicht exportierst oder als HTML speicherst.";
+}
+document.getElementById("ownBtn").onclick=()=>{const p=document.getElementById("ownPanel");p.hidden=!p.hidden;if(!p.hidden){renderOwn();p.scrollIntoView({behavior:"smooth",block:"start"});}};
+document.getElementById("ownClose").onclick=()=>{document.getElementById("ownPanel").hidden=true;};
+document.getElementById("topicForm").onsubmit=e=>{e.preventDefault();
+  const name=document.getElementById("tName").value.trim(); if(!name) return;
+  if(Object.values(TOPICS).some(n=>n.toLowerCase()===name.toLowerCase())){msg("Ein Thema mit diesem Namen gibt es schon.",true);return;}
+  const t={id:"u"+uid(),name,color:document.getElementById("tColor").value,icon:document.getElementById("tIcon").value.trim()||"⭐"};
+  custom.topics.push(t); document.getElementById("tName").value="";
+  persist(`Thema „${name}“ angelegt. Jetzt rechts Karten dazu anlegen.`); document.getElementById("cTopic").value=t.id;
+};
+function resetCardForm(){editId=null;["cQ","cA","cM","cT"].forEach(i=>document.getElementById(i).value="");document.getElementById("cSubmit").textContent="Karte speichern";document.getElementById("cCancel").hidden=true;}
+document.getElementById("cardForm").onsubmit=e=>{e.preventDefault();
+  const o={t:document.getElementById("cTopic").value,q:document.getElementById("cQ").value.trim(),a:document.getElementById("cA").value.trim(),merk:document.getElementById("cM").value.trim(),trap:document.getElementById("cT").value.trim()};
+  if(!o.q||!o.a) return;
+  if(editId){const x=custom.cards.find(c=>c.id===editId);Object.assign(x,o);resetCardForm();persist("Karte geändert.");}
+  else{o.id=uid();custom.cards.push(o);const t=o.t;resetCardForm();document.getElementById("cTopic").value=t;persist("Karte gespeichert.");document.getElementById("cTopic").value=t;}
+};
+document.getElementById("cCancel").onclick=resetCardForm;
+document.getElementById("ownList").onclick=e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.delcard){
+    if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent="Wirklich?";return;}
+    custom.cards=custom.cards.filter(c=>c.id!==b.dataset.delcard);persist("Karte gelöscht.");
+  }else if(b.dataset.deltopic){
+    const n=custom.cards.filter(c=>c.t===b.dataset.deltopic).length;
+    if(b.dataset.confirm!=="1"){b.dataset.confirm="1";b.textContent=n?`Mit ${n} Karten löschen?`:"Wirklich?";return;}
+    custom.cards=custom.cards.filter(c=>c.t!==b.dataset.deltopic);custom.topics=custom.topics.filter(t=>t.id!==b.dataset.deltopic);persist("Thema gelöscht.");
+  }else if(b.dataset.edit){
+    const x=custom.cards.find(c=>c.id===b.dataset.edit); editId=x.id;
+    document.getElementById("cTopic").value=x.t;document.getElementById("cQ").value=x.q;document.getElementById("cA").value=x.a;document.getElementById("cM").value=x.merk||"";document.getElementById("cT").value=x.trap||"";
+    document.getElementById("cSubmit").textContent="Änderung speichern";document.getElementById("cCancel").hidden=false;document.getElementById("cQ").focus();
+  }
+};
+function download(name,text,type){const b=new Blob([text],{type});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}
+const stamp=()=>new Date().toISOString().slice(0,10);
+document.getElementById("expBtn").onclick=()=>{download(`M02-eigene-Inhalte-${stamp()}.json`,JSON.stringify({format:"m02-lernkarten-custom",version:1,...custom},null,2),"application/json");msg("Export heruntergeladen.");};
+document.getElementById("impFile").onchange=e=>{
+  const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result); if(!Array.isArray(d.topics)||!Array.isArray(d.cards)) throw 0;
+    let nt=0,nc=0;
+    for(const t of d.topics) if(t&&t.id&&t.name&&!custom.topics.some(x=>x.id===t.id)){custom.topics.push({id:String(t.id),name:String(t.name).slice(0,40),color:/^#[0-9a-f]{6}$/i.test(t.color)?t.color:"#0891b2",icon:String(t.icon||"⭐").slice(0,4)});nt++;}
+    for(const c of d.cards) if(c&&c.id&&c.q&&c.a&&!custom.cards.some(x=>x.id===c.id)){custom.cards.push({id:String(c.id),t:String(c.t),q:String(c.q),a:String(c.a),merk:String(c.merk||""),trap:String(c.trap||"")});nc++;}
+    persist(`Import: ${nt} Themen und ${nc} Karten ergänzt (vorhandene bleiben erhalten).`);
+  }catch(err){msg("Die Datei ist kein gültiger Lernkarten-Export.",true);} e.target.value="";};
+  r.readAsText(f);
+};
+document.getElementById("htmlBtn").onclick=()=>{
+  const root=document.documentElement.cloneNode(true);
+  root.querySelector("#embedded-custom").textContent=JSON.stringify(custom).replace(/</g,"\\u003c");
+  ["#deck","#list","#chips","#ownList","#bar","#pstats"].forEach(sel=>{const n=root.querySelector(sel);if(n)n.innerHTML="";});
+  root.querySelector("#ownPanel").hidden=true; root.removeAttribute("data-theme");
+  root.querySelector("#quizList").innerHTML=""; root.querySelector("#quizView").hidden=true; root.querySelector("#cardsView").hidden=false;
+  root.querySelector("#flashList").innerHTML=""; root.querySelector("#flashView").hidden=true;
+  root.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t.id==="tabCards"));
+  root.querySelector("#viewBtn").hidden=false; root.querySelector("#ownBtn").hidden=false;
+  download(`M02-Lernkarten-mit-eigenen-Inhalten-${stamp()}.html`,"<!doctype html>\n"+root.outerHTML,"text/html");
+  msg("HTML gespeichert. Diese Datei enthält deine Inhalte fest eingebaut, auch auf anderen Geräten.");
+};
+
+let qt;
+function setQuery(v){query=v;document.getElementById("q").value=v;state.idx=0;flipped=false;render();}
+document.getElementById("q").addEventListener("input",e=>{clearTimeout(qt);const v=e.target.value;qt=setTimeout(()=>{query=v.trim();state.idx=0;flipped=false;render();},120);});
+document.getElementById("qx").onclick=()=>{setQuery("");document.getElementById("q").focus();};
+
+/* ---------- M02: Quiz (nichts wird gespeichert) ---------- */
+const QUIZ=[
+{q:"Angebotsprozess der Schreinerei, SIPOC-Methode. Wer ist der primäre „Customer“ (C)?",
+ o:["Holzhändler, der das Material liefert",
+    "Potenzieller Kunde, der eine Anfrage stellt",
+    "Schreiner, der das Angebot kalkuliert",
+    "Architekt, der die Baupläne erstellt"],
+ r:1, e:"Customer = Empfänger des Prozessergebnisses (Output). Beim Angebotsprozess ist das der anfragende Kunde, der das fertige Angebot erhält.",
+ n:`Hinweis: SIPOC kommt im Begleitskript nicht vor, siehe Ergänzungskarte.`},
+{q:"Im Interview sagt Klaus Müller: „Dann wird das Angebot erstellt, das ist ja klar.“ Welche Reaktion entspricht der gelernten Fragetechnik?",
+ o:["Nicken und „Angebotserstellung“ notieren",
+    "„Erstellt das Angebot Ihr Meister oder die Bürokraft?“",
+    "„Wer genau erstellt das Angebot und welche Werkzeuge werden dafür genutzt?“",
+    "„Können wir den Schritt überspringen und zum Versand kommen?“"],
+ r:2, e:"Bei Selbstverständlichkeiten mit offenen W-Fragen nachhaken (Wer, Womit), um tatsächliche Schritte, Personen und Werkzeuge aufzudecken. B ist eine geschlossene Entweder-oder-Frage und gibt die Antwort schon vor."},
+{q:"Bestellprozess Bäckerei Wagner. Filiale, Zentrale und Backstube sind interne Abteilungen derselben Firma und sollen sichtbar sein. Wie stellst du sie in BPMN dar?",
+ o:["Drei Pools mit Message Flows",
+    "Drei Lanes in einem Pool „Bäckerei Wagner“",
+    "Drei aufeinanderfolgende User Tasks",
+    "Drei Sub-Prozesse auf oberster Ebene"],
+ r:1, e:"Interne Abteilungen als Lanes in einem Pool. Pools stehen für eigenständige Teilnehmer (typisch externe Organisationen). User Tasks und Sub-Prozesse sind Aktivitäten, keine Organisationseinheiten.",
+ n:`Kritik: „nur für externe Organisationen“ ist zu absolut, siehe Frage 4.`},
+{q:"Die Filiale (eigener Pool) sendet eine Bestellung an die Zentrale (zweiter Pool). Womit modellierst du den Informationsaustausch?",
+ o:["Sequence Flow, weil die Schritte nacheinander erfolgen",
+    "Message Flow zwischen den beiden Pools",
+    "Annotation",
+    "Gemeinsamer Sub-Prozess „Datenübertragung“"],
+ r:1, e:"Zwischen Pools nur Message Flow; Sequence Flow darf Pool-Grenzen nicht überschreiten.",
+ n:`Kritik: Frage 3 sagt, Filiale und Zentrale gehören als Lanes in einen Pool. Hier sind sie zwei Pools. Beides ist modellierbar, aber die Fragen widersprechen sich.`},
+{q:"Belegprozess Hoffmann. „Wenn nach 14 Tagen eine Original-Rechnung immer noch fehlt, soll automatisch eine Mahnung an den Mandanten gehen.“ Welches BPMN-Symbol?",
+ o:["Exklusives Gateway, das prüft, ob 14 Tage vergangen sind",
+    "Error Event, weil eine fehlende Rechnung ein Fehler ist",
+    "Timer Event, angehängt an den Task „Warten auf Rechnung“",
+    "Paralleles Gateway, das den Mahnprozess startet"],
+ r:2, e:"Ein Timer Event modelliert den zeitbasierten Ausnahmepfad nach Ablauf der Frist. Error Events sind für technische/fachliche Fehler, ein Gateway kann nicht „warten“.",
+ n:`Kritik: Ob unterbrechend oder nicht-unterbrechend, sagt die Lösung nicht. Soll nach der Mahnung weiter auf die Rechnung gewartet werden, ist ein nicht-unterbrechendes Timer-Boundary-Event (gestrichelt) richtig. Sauberer wäre ohnehin ein Event-basiertes Gateway (Rechnung eingegangen vs. 14 Tage vergangen) statt eines Tasks „Warten“.`},
+{q:"Schmidt-Logistik disponiert nach einer Frachtanfrage entweder Standard-LKW, Kühltransport oder Schwertransport, immer nur eine Option. Welches Gateway?",
+ o:["Parallel (AND)",
+    "Inklusiv (OR)",
+    "Exklusiv (XOR)",
+    "Event-basiert"],
+ r:2, e:"XOR: genau eine von mehreren Alternativen. Bedingungen an die Pfeile schreiben, Default Flow markieren.",
+ n:`Hinweis: Gateway-Typen stehen nicht im Begleitskript, siehe Ergänzungskarte.`},
+{q:"Wertstromanalyse Wagner. Bestellungen werden abends gesammelt und erst am nächsten Morgen bearbeitet. Welche Verschwendungsart primär?",
+ o:["Überproduktion",
+    "Unnötiger Transport",
+    "Warten",
+    "Fehler"],
+ r:2, e:"Der Vorgang liegt unbearbeitet, die Wertschöpfung steht still.",
+ n:`Anmerkung: Das Sammeln (Batching) erzeugt zugleich Bestände (liegende Bestellungen). „Primär“ macht C trotzdem zur besten Antwort.`},
+{q:"Welche zentrale Erkenntnis über Prozessaufnahme liefert der Hoffmann-Mailverlauf?",
+ o:["Prozesse sind meist perfekt dokumentiert und werden exakt befolgt",
+    "Der reale Ist-Prozess enthält oft unstrukturierte Schleifen und weicht von der Theorie ab",
+    "Interviews sind die einzig verlässliche Methode",
+    "Prozessaufnahme ist nur in Produktionsbetrieben sinnvoll"],
+ r:1, e:"Der Mailverlauf zeigt den tatsächlichen Ablauf voller Ausnahmen und Rückfragen, die in einer idealisierten Beschreibung fehlen (Prozess-Eisberg)."},
+{q:"Wertstromkarte Wagner: Bearbeitungszeit 15 Minuten, Durchlaufzeit 8 Stunden. Was sagt das Verhältnis?",
+ o:["Geringer Wertschöpfungsanteil, hohe Liegezeiten",
+    "Die Mitarbeiter arbeiten sehr langsam",
+    "Fast 100 % wertschöpfend",
+    "Mit schnelleren Computern auf 15 Min reduzierbar"],
+ r:0, e:"15 / 480 Min ≈ 3,1 %. Der große Rest ist Warten bzw. Liegen.",
+ n:`Kritik: Die Lösung setzt Bearbeitungszeit mit Wertschöpfung gleich. Nach der Skript-Definition ist auch Bearbeitungszeit nur teilweise wertschöpfend (z. B. Nacharbeit), der echte Anteil liegt also bei höchstens 3,1 %.`},
+{q:"Im Müller-Profil werden drei Workarounds erwähnt. Warum musst du sie als Digitalisierungsmanager verstehen?",
+ o:["Um Regelbrecher zu identifizieren",
+    "Weil Workarounds oft auf Schwachstellen oder fehlende Funktionen hinweisen",
+    "Um zu beweisen, dass die Doku fehlerhaft ist",
+    "Weil Workarounds immer ineffizient sind und sofort weg müssen"],
+ r:1, e:"Workarounds zeigen, wo der offizielle Prozess lückenhaft ist oder die Realität nicht abbildet. Sie sind ein Startpunkt für echte Verbesserungen.",
+ n:`Anmerkung: Die Antwort sagt „Soll-Prozess“. Gemeint ist der offizielle bzw. vorgegebene Prozess; ein Soll im Sinne der Optimierung gibt es da noch nicht.`}
+];
+const LET="ABCD";
+function renderQuiz(){
+  document.getElementById("quizList").innerHTML=QUIZ.map((x,i)=>`<article class="qitem" id="qz${i}">
+    <span class="qn">Frage ${i+1}</span>
+    <div class="qt">${esc(x.q)}</div>
+    <ol class="opts">${x.o.map((o,j)=>`<li class="opt${j===x.r?" right":""}"><span class="ol">${LET[j]}</span><span class="ot">${esc(o)}</span></li>`).join("")}</ol>
+    <button class="btn revbtn" data-qz="${i}" aria-expanded="false" aria-controls="qzs${i}">Lösung aufdecken</button>
+    <div class="sol" id="qzs${i}" hidden><p class="sr">Richtig: ${LET[x.r]}</p><p>${esc(x.e)}</p>${x.n?`<div class="trap"><b>⚠ Kritischer Hinweis (eigene Anmerkung, nicht aus dem Kurs):</b> ${x.n}</div>`:""}</div>
+  </article>`).join("");
+  quizCount();
+}
+function setRev(i,on){
+  const it=document.getElementById("qz"+i), b=it.querySelector(".revbtn");
+  it.classList.toggle("open",on); document.getElementById("qzs"+i).hidden=!on;
+  b.setAttribute("aria-expanded",on); b.textContent=on?"Lösung verbergen":"Lösung aufdecken";
+}
+function quizCount(){const n=document.querySelectorAll("#quizList .qitem.open").length;document.getElementById("qzCount").textContent=`${n} von ${QUIZ.length} Lösungen aufgedeckt`;}
+document.getElementById("quizList").onclick=e=>{const b=e.target.closest("[data-qz]");if(!b)return;const i=+b.dataset.qz;setRev(i,!document.getElementById("qz"+i).classList.contains("open"));quizCount();};
+document.getElementById("qzAll").onclick=()=>{QUIZ.forEach((_,i)=>setRev(i,true));quizCount();};
+document.getElementById("qzNone").onclick=()=>{QUIZ.forEach((_,i)=>setRev(i,false));quizCount();};
+
+/* ---------- M02: Flashcards (nichts wird gespeichert) ---------- */
+const FC_COL={Definition:"#6366f1",Konzept:"#8b5cf6",Methode:"#0ea5e9",Beispiel:"#10b981",Anwendung:"#f59e0b",Tool:"#f43f5e"};
+const FLASH=[
+{k:"Methode",q:"Nenne drei Methoden der Prozessaufnahme.",
+ a:`<p>Interview, Beobachtung (Gemba) und Dokumentenanalyse, im Idealfall kombiniert.</p>`},
+{k:"Definition",q:"Was bedeutet BPMN?",
+ a:`<p>Business Process Model and Notation; standardisiert als ISO/IEC 19510.</p>`},
+{k:"Konzept",q:"Was unterscheidet Sequence Flow von Message Flow?",
+ a:`<p>Sequence Flow: Ablauf innerhalb eines Pools.<br>Message Flow: Kommunikation zwischen Pools.</p>`},
+{k:"Definition",q:"Was ist ein Timer Event?",
+ a:`<p>Uhr-Symbol. Für zeitgesteuerte Starts, Wartezeiten und Deadlines.</p>`},
+{k:"Methode",q:"Wann nutzt du einen Sub-Prozess in BPMN?",
+ a:`<p>Wenn ein Diagramm zu groß wird (Faustregel: mehr als 15–20 Elemente). Außerdem für Teile, die wiederverwendet werden (dann als Call Activity).</p>`},
+{k:"Methode",q:"Was ist Wertstromanalyse (VSM)?",
+ a:`<p>Material- und Informationsfluss, mit Fokus auf die Zeit. Sie trennt wertschöpfende Zeit von Verschwendung.</p>`},
+{k:"Konzept",q:"Nenne drei der sieben Verschwendungsarten (Muda).",
+ a:`<ol><li>Überproduktion</li><li>Wartezeit</li><li>Transport</li><li>Überbearbeitung</li><li>Bestände</li><li>Unnötige Bewegung</li><li>Fehler/Nacharbeit</li></ol>`},
+{k:"Methode",q:"Was ist eine SIPOC-Analyse?",
+ a:`<p>Supplier, Input, Process, Output, Customer. Grobe Prozessübersicht auf einer Seite: wer liefert was, welche 5–7 Hauptschritte, was kommt heraus, wer empfängt es. Customer = Empfänger des Outputs.</p>`},
+{k:"Konzept",q:"Was ist der Unterschied zwischen Soll- und Ist-Prozess?",
+ a:`<p>Ist-Prozess: wie der Prozess heute tatsächlich abläuft, inkl. Workarounds, Ausnahmen, Medienbrüchen.<br>Soll-Prozess: der angestrebte, verbesserte Zielprozess.<br>Merksatz aus dem Skript: Ohne sauberes Ist kein gutes Soll.</p>`},
+{k:"Konzept",q:"Was ist der Unterschied zwischen Pool und Lane in BPMN?",
+ a:`<p>Pool: ein eigenständiger Prozessbeteiligter (typisch eine Organisation). Zwischen Pools nur Message Flow.<br>Lane: Unterteilung innerhalb eines Pools für Rollen oder Abteilungen. Zwischen Lanes läuft Sequence Flow.</p>`},
+{k:"Definition",q:"Was ist ein exklusives Gateway (XOR)?",
+ a:`<p>Eine Verzweigung, bei der genau einer von mehreren Pfaden genommen wird (Raute mit „X“ oder leer). Bedingungen an die ausgehenden Pfeile schreiben, Default Flow markieren. Beim Zusammenführen wartet es nicht, sondern lässt den ankommenden Pfad durch.</p>`},
+{k:"Tool",q:"Wofür steht bpmn.io?",
+ a:`<p>bpmn.io „steht“ für nichts, es ist kein Akronym. Es ist ein kostenloses, browserbasiertes Open-Source-Werkzeug (von Camunda) zum Zeichnen von BPMN-Diagrammen.</p>`,
+ trap:`Die Frage ist schief gestellt; gemeint ist wohl „Was ist bpmn.io?“`},
+{k:"Definition",q:"Was ist ein Error Event?",
+ a:`<p>Ein Ereignis (Blitz-Symbol) für Fehlerbehandlung. Als End-Event wirft es einen Fehler; als Boundary Event am Rand einer Aktivität fängt es ihn ab, bricht die Aktivität immer ab und leitet in einen Ausnahmepfad.</p>`},
+{k:"Definition",q:"Was ist der Zweck eines Prozess-Steckbriefs?",
+ a:`<p>Eine einseitige Kurzbeschreibung eines Prozesses als Teil des Dokumentationspakets (mit BPMN-Modell, Wertstromkarte, Schwachstellenmatrix). Typischer Inhalt: Name, Ziel, Prozesseigner, Start und Ende, Input/Output, Kunden, Beteiligte, IT-Systeme, Kennzahlen.</p>`,
+ trap:`Inhalt ist eine Ergänzung aus allgemeinem Wissen; das Skript nennt den Steckbrief nur. Mit eurer Kursvorlage abgleichen.`},
+{k:"Beispiel",q:"Beispiel: Workaround bei der Müller-Schreinerei.",
+ a:`<p>Laut Quiz nennt das Profil drei Workarounds. Allgemein gilt: Ein Workaround ist ein inoffizieller Umweg, der eine Lücke im offiziellen Prozess oder System überbrückt, und damit ein Hinweis auf eine Schwachstelle.</p>`,
+ trap:`<b>Kursmaterial fehlt:</b> Antwort aus Kursmaterial ergänzen (Müller-Profil, das mir nicht vorliegt). Was hier steht, ist eine allgemeine Einordnung, kein Kurswissen.`},
+{k:"Methode",q:"Was ist ein „Digital Gemba Walk“?",
+ a:`<p>Naheliegende Lesart: Gemba-Prinzip (dort hinschauen, wo die Arbeit passiert) übertragen auf digitale Arbeit, also Mitarbeitenden am Bildschirm über die Schulter schauen, Klickwege, Systemwechsel und Medienbrüche beobachten.</p>`,
+ trap:`<b>Kursmaterial fehlt:</b> Antwort aus Kursmaterial ergänzen. Der Begriff steht nicht im Skript und ist kein feststehender Fachbegriff. Was hier steht, ist eine allgemeine Einordnung, kein Kurswissen.`},
+{k:"Konzept",q:"Was ist der Unterschied zwischen Durchlauf- und Bearbeitungszeit?",
+ a:`<p>Durchlaufzeit: gesamte Zeit vom Start bis zum Ende des Prozesses, inkl. Warte- und Liegezeiten.<br>Bearbeitungszeit: Zeit, in der aktiv am Vorgang gearbeitet wird.<br>Achtung: Bearbeitungszeit ist nicht automatisch Wertschöpfungszeit (z. B. Nacharbeit).</p>`},
+{k:"Definition",q:"Wozu dient eine Schwachstellenmatrix?",
+ a:`<p>Sie sammelt die gefundenen Schwachstellen eines Prozesses und bewertet sie auf vier Ebenen: Zeit, Kosten, Qualität, Risiko. So lassen sich Verbesserungen priorisieren. Teil des Dokumentationspakets.</p>`},
+{k:"Beispiel",q:"Beispiel: Prozessbeteiligte bei Wagner-Filialen.",
+ a:`<p>Aus dem Quiz bekannt: Filiale, Zentrale und Backstube (interne Abteilungen, in BPMN als Lanes in einem Pool „Bäckerei Wagner“). Weitere Beteiligte (z. B. Kunden, Lieferanten, Fahrer) stehen vermutlich im Fallmaterial.</p>`,
+ trap:`<b>Kursmaterial fehlt:</b> Antwort aus Kursmaterial ergänzen. Was hier steht, ist eine allgemeine Einordnung, kein Kurswissen.`},
+{k:"Methode",q:"Was ist der Zweck eines Cross-Reviews von BPMN-Modellen?",
+ a:`<p>Allgemein: Andere prüfen dein Modell (und du ihres) auf Notationsfehler (z. B. die fünf Anfängerfehler), fachliche Korrektheit und Verständlichkeit. Wer den Prozess nicht kennt, merkt am schnellsten, was unklar ist.</p>`,
+ trap:`<b>Kursmaterial fehlt:</b> Genaue Kursdefinition aus Kursmaterial ergänzen. Was hier steht, ist eine allgemeine Einordnung, kein Kurswissen.`}
+];
+function renderFlash(){
+  document.getElementById("flashList").innerHTML=FLASH.map(({k,q,a,trap},i)=>`<article class="qitem fitem" id="fc${i}" style="--fc:${FC_COL[k]||"#6366f1"}">
+    <div class="fhead"><span class="qn" style="background:var(--fc)">Karte ${i+1}</span><span class="fcat">${esc(k)}</span></div>
+    <div class="qt">${esc(q)}</div>
+    <button class="btn revbtn" data-fc="${i}" aria-expanded="false" aria-controls="fca${i}">Antwort aufdecken</button>
+    <div class="fans" id="fca${i}" hidden>${a}${trap?`<div class="trap"><b>⚠ Falle/Hinweis:</b> ${trap}</div>`:""}</div>
+  </article>`).join("");
+  flashCount();
+}
+function setFc(i,on){
+  const it=document.getElementById("fc"+i), b=it.querySelector(".revbtn");
+  it.classList.toggle("open",on); document.getElementById("fca"+i).hidden=!on;
+  b.setAttribute("aria-expanded",on); b.textContent=on?"Antwort verbergen":"Antwort aufdecken";
+}
+function flashCount(){const n=document.querySelectorAll("#flashList .qitem.open").length;document.getElementById("fcCount").textContent=`${n} von ${FLASH.length} Antworten aufgedeckt`;}
+document.getElementById("flashList").onclick=e=>{const b=e.target.closest("[data-fc]");if(!b)return;const i=+b.dataset.fc;setFc(i,!document.getElementById("fc"+i).classList.contains("open"));flashCount();};
+document.getElementById("fcAll").onclick=()=>{FLASH.forEach((_,i)=>setFc(i,true));flashCount();};
+document.getElementById("fcNone").onclick=()=>{FLASH.forEach((_,i)=>setFc(i,false));flashCount();};
+
+/* ---------- Reiter ---------- */
+const TABS=[{id:"cards",btn:"tabCards",view:"cardsView",hash:""},{id:"quiz",btn:"tabQuiz",view:"quizView",hash:"#quiz"},{id:"flash",btn:"tabFlash",view:"flashView",hash:"#flashcards"}];
+let activeTab="cards";
+function showTab(t,push){
+  activeTab=t; const cards=t==="cards";
+  for(const x of TABS){document.getElementById(x.btn).setAttribute("aria-selected",x.id===t);document.getElementById(x.view).hidden=x.id!==t;}
+  document.getElementById("viewBtn").hidden=!cards; document.getElementById("ownBtn").hidden=!cards;
+  if(!cards) document.getElementById("ownPanel").hidden=true;
+  if(push){const h=TABS.find(x=>x.id===t).hash; try{history.replaceState(null,"",h||location.pathname+location.search);}catch(e){}}
+}
+for(const x of TABS) document.getElementById(x.btn).onclick=()=>showTab(x.id,true);
+document.querySelector(".tabs").addEventListener("keydown",e=>{if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.stopPropagation();const i=TABS.findIndex(x=>x.id===activeTab),n=TABS[(i+(e.key==="ArrowRight"?1:TABS.length-1))%TABS.length];showTab(n.id,true);document.getElementById(n.btn).focus();}});
+renderQuiz(); renderFlash();
+{const h=TABS.find(x=>x.hash&&x.hash===location.hash); if(h) showTab(h.id,false);}
+render();
+</script>
+</body>
+</html>
